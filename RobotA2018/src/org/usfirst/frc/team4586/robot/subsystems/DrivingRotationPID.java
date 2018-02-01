@@ -7,20 +7,19 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  *
  */
 public class DrivingRotationPID implements PIDOutput {
-double rotation;
+	double rotation;
 
+	public DrivingRotationPID() {
+		this.rotation = 0;
+	}
 
-public DrivingRotationPID() {
-	this.rotation = 0;
-}
+	@Override
+	public void pidWrite(double output) {
+		// TODO Auto-generated method stub
+		this.rotation = output;
+	}
 
-@Override
-public void pidWrite(double output) {
-	// TODO Auto-generated method stub
-	this.rotation = output;
-}
-
-public double getRotation() {
-	return this.rotation;
-}
+	public double getRotation() {
+		return this.rotation;
+	}
 }

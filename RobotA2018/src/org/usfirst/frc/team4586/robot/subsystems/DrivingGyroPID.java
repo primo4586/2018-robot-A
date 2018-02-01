@@ -10,15 +10,15 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  */
 public class DrivingGyroPID implements PIDSource {
 
-AnalogGyro gyro;
-	
+	AnalogGyro gyro;
+
 	public DrivingGyroPID(AnalogGyro _gyro) {
 		this.gyro = _gyro;
 	}
-	
+
 	public void setPIDSourceType(PIDSourceType pidSource) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public PIDSourceType getPIDSourceType() {
@@ -38,11 +38,11 @@ AnalogGyro gyro;
 
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
-		
+
 	}
-    }
+}

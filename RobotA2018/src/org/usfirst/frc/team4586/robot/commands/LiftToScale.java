@@ -13,34 +13,34 @@ public class LiftToScale extends Command {
 
 	private CubeSystem cubeSystem;
 
-    public LiftToScale() {
-    	 this.cubeSystem=Robot.cubeSystem;
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    }
+	public LiftToScale() {
+		this.cubeSystem = Robot.cubeSystem;
+		// Use requires() here to declare subsystem dependencies
+		// eg. requires(chassis);
+	}
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	cubeSystem.setSpeedElevators(SmartDashboard.getNumber("Elavator Speed",0));
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		cubeSystem.setSpeedElevators(SmartDashboard.getNumber("Elavator Speed", 0));
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return cubeSystem.getScaleSensor();
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return cubeSystem.getScaleSensor();
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    	cubeSystem.setSpeedElevators(0);
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+		cubeSystem.setSpeedElevators(0);
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	cubeSystem.setSpeedElevators(0);
-    }
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+		cubeSystem.setSpeedElevators(0);
+	}
 }

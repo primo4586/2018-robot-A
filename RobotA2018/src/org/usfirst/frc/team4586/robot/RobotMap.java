@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.Victor;
  * floating around.
  */
 public class RobotMap {
-	
+
 	public static WPI_TalonSRX leftFrontMotor;
 	public static WPI_TalonSRX leftBackMotor;
 	public static WPI_TalonSRX rightFrontMotor;
@@ -36,7 +36,7 @@ public class RobotMap {
 	public static Solenoid pushCube;
 	public static WPI_TalonSRX elevatorsMotor;
 	public static AnalogGyro gyro;
-	public static Encoder drivingEncoder ;
+	public static Encoder drivingEncoder;
 	public static DigitalInput scaleSensor;
 	public static DigitalInput switchSensor;
 	public static DigitalInput floorSensor;
@@ -44,30 +44,28 @@ public class RobotMap {
 	public static Solenoid solenoidCube1;
 	public static Solenoid solenoidCube2;
 
-	
-	public static void Init()
-	{
-		//TODO Check connections
+	public static void Init() {
+		// TODO Check connections
 		leftFrontMotor = new WPI_TalonSRX(2);
 		leftBackMotor = new WPI_TalonSRX(4);
 		rightFrontMotor = new WPI_TalonSRX(8);
 		rightBackMotor = new WPI_TalonSRX(1);
 		climbMotor1 = new WPI_TalonSRX(9);
 		climbMotor2 = new WPI_TalonSRX(5);
-		openLeftPlatfrom =  new Solenoid(9);
-		openRightPlatfrom =  new Solenoid(5);
+		openLeftPlatfrom = new Solenoid(9);
+		openRightPlatfrom = new Solenoid(5);
 		elevatorsMotor = new WPI_TalonSRX(2);
 		gyro = new AnalogGyro(0);
-		drivingEncoder = new Encoder(0,0);
+		drivingEncoder = new Encoder(0, 0);
 		scaleSensor = new DigitalInput(0);
-		switchSensor= new DigitalInput(0);
-		floorSensor= new DigitalInput(0);
-		compressor = new  Compressor();
+		switchSensor = new DigitalInput(0);
+		floorSensor = new DigitalInput(0);
+		compressor = new Compressor();
 		solenoidCube1 = new Solenoid(0);
 		solenoidCube2 = new Solenoid(0);
-		pushCube =new Solenoid(0);
+		pushCube = new Solenoid(0);
 	}
-	
+
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;
@@ -77,4 +75,4 @@ public class RobotMap {
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
-}   
+}

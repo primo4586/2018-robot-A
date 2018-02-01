@@ -13,34 +13,35 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OpenPlatforms extends Command {
 
 	private Climber climber;
-    public OpenPlatforms() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	this.climber = Robot.climber;
-    }
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	public OpenPlatforms() {
+		// Use requires() here to declare subsystem dependencies
+		// eg. requires(chassis);
+		this.climber = Robot.climber;
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	if (Timer.getMatchTime()<32 || SmartDashboard.getBoolean("allow pre end game platforms", false) ) {
-    		climber.setPlatforms(true);
-    	}
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return true;
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		if (Timer.getMatchTime() < 32 || SmartDashboard.getBoolean("allow pre end game platforms", false)) {
+			climber.setPlatforms(true);
+		}
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return true;
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }

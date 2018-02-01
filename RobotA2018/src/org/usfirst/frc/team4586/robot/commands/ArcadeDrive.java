@@ -11,90 +11,90 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class ArcadeDrive extends Command {
-	 private OI oi;
-	 private Driver driver;
-	 private double speed;
-	 private double rotation; 
-	 
-    public ArcadeDrive() {
-   	 this.driver=Robot.driver;
-     this.oi=Robot.m_oi;
-     
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    }
+	private OI oi;
+	private Driver driver;
+	private double speed;
+	private double rotation;
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
- 
-    	this.driver.resetGyro();
-    	this.driver.setSetPoint(0);
-    	this.driver.enable();
-    	
-    }
+	public ArcadeDrive() {
+		this.driver = Robot.driver;
+		this.oi = Robot.m_oi;
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	if (SmartDashboard.getBoolean("use gyro", false))
-    	{
-    		drivingWithGyro();
-    	}
-    	else
-    	{
-    		drivingWithOutGyro();
-    	}
-    }
-    
-    private void drivingWithOutGyro()
-    {
-       	this.speed = SmartDashboard.getNumber("Driving direction", 1)*((this.oi.joystickDriver.getRawAxis(1) * SmartDashboard.getNumber("Max speed",0))+oi.joystickDriver.getRawAxis(2)*0.3-oi.joystickDriver.getRawAxis(3)*0.3);
-       	this.rotation = SmartDashboard.getNumber("Driving direction", 1)*((this.oi.joystickDriver.getRawAxis(4) * SmartDashboard.getNumber("Max speed",0))+oi.joystickDriver.getRawAxis(2)*0.3-oi.joystickDriver.getRawAxis(3)*0.3);
-       	if(Math.abs(speed)<0.2) {
-       		speed = 0;
-       	}
-       	if(Math.abs(rotation)<0.2) {
-       		rotation = 0;
-       	}
-    	this.driver.arcadeDrive(speed, rotation);
-    }
-    private void drivingWithGyro()
-    {
-       	this.speed = SmartDashboard.getNumber("Driving direction", 1)*((this.oi.joystickDriver.getRawAxis(1) * SmartDashboard.getNumber("Max speed",0))+oi.joystickDriver.getRawAxis(2)*0.3-oi.joystickDriver.getRawAxis(3)*0.3);
-       	this.rotation = SmartDashboard.getNumber("Driving direction", 1)*((this.oi.joystickDriver.getRawAxis(4) * SmartDashboard.getNumber("Max speed",0))+oi.joystickDriver.getRawAxis(2)*0.3-oi.joystickDriver.getRawAxis(3)*0.3);
-       	if(Math.abs(speed)<0.2) {
-       		speed = 0;
-       	}
-       	if(Math.abs(rotation)<0.2) {
-       		rotation = this.driver.getRotation();
-       		if(Math.abs(this.driver.getGyroAngle())<2) {
-       			rotation = 0;
-       		}
-       			
-       	}
-       	else
-       	{
-       		this.driver.resetGyro();
-       	}
-    	this.driver.arcadeDrive(speed, rotation);
-    }
-    
-    
-    
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
+		// Use requires() here to declare subsystem dependencies
+		// eg. requires(chassis);
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    	this.driver.disable();
-    	this.driver.stopAllWheels();
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	this.driver.disable();
-    	this.driver.stopAllWheels();
-    }
+		this.driver.resetGyro();
+		this.driver.setSetPoint(0);
+		this.driver.enable();
+
+	}
+
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		if (SmartDashboard.getBoolean("use gyro", false)) {
+			drivingWithGyro();
+		} else {
+			drivingWithOutGyro();
+		}
+	}
+
+	private void drivingWithOutGyro() {
+		this.speed = SmartDashboard.getNumber("Driving direction", 1)
+				* ((this.oi.joystickDriver.getRawAxis(1) * SmartDashboard.getNumber("Max speed", 0))
+						+ oi.joystickDriver.getRawAxis(2) * 0.3 - oi.joystickDriver.getRawAxis(3) * 0.3);
+		this.rotation = SmartDashboard.getNumber("Driving direction", 1)
+				* ((this.oi.joystickDriver.getRawAxis(4) * SmartDashboard.getNumber("Max speed", 0))
+						+ oi.joystickDriver.getRawAxis(2) * 0.3 - oi.joystickDriver.getRawAxis(3) * 0.3);
+		if (Math.abs(speed) < 0.2) {
+			speed = 0;
+		}
+		if (Math.abs(rotation) < 0.2) {
+			rotation = 0;
+		}
+		this.driver.arcadeDrive(speed, rotation);
+	}
+
+	private void drivingWithGyro() {
+		this.speed = SmartDashboard.getNumber("Driving direction", 1)
+				* ((this.oi.joystickDriver.getRawAxis(1) * SmartDashboard.getNumber("Max speed", 0))
+						+ oi.joystickDriver.getRawAxis(2) * 0.3 - oi.joystickDriver.getRawAxis(3) * 0.3);
+		this.rotation = SmartDashboard.getNumber("Driving direction", 1)
+				* ((this.oi.joystickDriver.getRawAxis(4) * SmartDashboard.getNumber("Max speed", 0))
+						+ oi.joystickDriver.getRawAxis(2) * 0.3 - oi.joystickDriver.getRawAxis(3) * 0.3);
+		if (Math.abs(speed) < 0.2) {
+			speed = 0;
+		}
+		if (Math.abs(rotation) < 0.2) {
+			rotation = this.driver.getRotation();
+			if (Math.abs(this.driver.getGyroAngle()) < 2) {
+				rotation = 0;
+			}
+
+		} else {
+			this.driver.resetGyro();
+		}
+		this.driver.arcadeDrive(speed, rotation);
+	}
+
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return false;
+	}
+
+	// Called once after isFinished returns true
+	protected void end() {
+		this.driver.disable();
+		this.driver.stopAllWheels();
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+		this.driver.disable();
+		this.driver.stopAllWheels();
+	}
 }

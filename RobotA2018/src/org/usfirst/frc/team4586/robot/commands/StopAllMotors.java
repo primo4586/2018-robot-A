@@ -15,36 +15,37 @@ public class StopAllMotors extends Command {
 	private Driver driver;
 	private CubeSystem cubeSystem;
 	private Climber climber;
-    public StopAllMotors() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	driver =  Robot.driver;
-    	cubeSystem = Robot.cubeSystem;
-    	climber = Robot.climber;
-    }
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	public StopAllMotors() {
+		// Use requires() here to declare subsystem dependencies
+		// eg. requires(chassis);
+		driver = Robot.driver;
+		cubeSystem = Robot.cubeSystem;
+		climber = Robot.climber;
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	driver.stopAllWheels();
-    	cubeSystem.stopElevators();
-    	climber.stopAllClimberMotors();
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return true;
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		driver.stopAllWheels();
+		cubeSystem.stopElevators();
+		climber.stopAllClimberMotors();
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return true;
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }
