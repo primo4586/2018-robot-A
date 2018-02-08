@@ -6,9 +6,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoCommandGroupRight extends CommandGroup {
+public class AutoRightSide extends CommandGroup {
 
-	public AutoCommandGroupRight() {
+	public AutoRightSide() {
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		if (gameData.charAt(0) == 'R' && gameData.charAt(1) != 'R') {
 			addSequential(new AutoDrive(450));

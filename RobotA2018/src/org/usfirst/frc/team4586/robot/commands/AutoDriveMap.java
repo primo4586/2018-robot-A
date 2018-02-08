@@ -8,12 +8,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class AutoDrive extends Command {
-
+public class AutoDriveMap extends Command {
 	private Driver driver;
 	private double setPoint;
 
-	public AutoDrive(double setPoint) {
+	public AutoDriveMap(double setPoint) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis)
 		driver = Robot.driver;
@@ -26,11 +25,11 @@ public class AutoDrive extends Command {
 		driver.resetEncoder();
 		driver.resetGyro();
 		// setPoint = SmartDashboard.getNumber("Encoder Setpoint",0);
+		setTimeout(1.5);
 		driver.setEncoderControllerSetPoint(setPoint);
 		driver.enableEncoder();
 		driver.setSetPointGyro(0);
 		driver.enableGyro();
-		setTimeout(1.5);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -39,7 +38,8 @@ public class AutoDrive extends Command {
 		// Distance",0) + ", Stiya: "
 		// + SmartDashboard.getNumber("Gyro Value",0));
 		driver.getGyroController().setPID(0.08, 0, 0.295);
-		driver.arcadeDrive(driver.getSpeed() * 0.8, -driver.getRotation());
+		driver.arcadeDrive(-driver.getRotation(),
+				map(this.setPoint - driver.getDistenceEncoder(), 0, this.setPoint, 0, 0.8));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -56,24 +56,22 @@ public class AutoDrive extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		driver.disableGyro();
 		driver.disableEncoder();
+		driver.disableGyro();
 		driver.stopAllWheels();
-		// System.out.println("Drive: " + SmartDashboard.getNumber("Encoder
-		// Distance",0) + ", Stiya: "
-		// + SmartDashboard.getNumber("Gyro Value",0));
-		System.out.println(setPoint);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		driver.disableGyro();
 		driver.disableEncoder();
+		driver.disableGyro();
 		driver.stopAllWheels();
-		// System.out.println("Drive: " + SmartDashboard.getNumber("Encoder
-		// Distance",0) + ", Stiya: "
-		// + SmartDashboard.getNumber("Gyro Value",0));
-		System.out.println(setPoint);
+	}
+
+	protected double map(double toMap, double disMin, double disMax, double speedMin, double speedMax) {
+		if (toMap > disMax)
+			return speedMax;
+		return speedMin + toMap * (speedMax - speedMin) / (disMax - disMin);
 	}
 }

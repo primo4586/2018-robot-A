@@ -9,53 +9,43 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class AutoTurn extends Command {
-	public Driver driver;
-	double setPoint;
+public class AutoDriveTime extends Command {
 
-    public AutoTurn(double setPoint) {
+	private Driver driver;
+	private double time;
+	
+    public AutoDriveTime(double _time) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	driver = Robot.driver;
-    	this.setPoint = setPoint;
+    	this.driver = Robot.driver;
+		this.time = _time;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//setPoint = SmartDashboard.getNumber("GYRO Setpoint",0);
-    	setTimeout(1.15);
-    	driver.setSetPointGyro(setPoint);
-    	driver.enableGyro();
-    	driver.resetGyro();
+		driver.resetGyro();
+		driver.setSetPointGyro(0);
+		driver.enableGyro();
+		setTimeout(this.time);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		driver.getGyroController().setPID(0.08, 0, 0.3);
-    	if (Math.abs(driver.getGyroAngle() - setPoint) >= 2) 
-    		driver.arcadeDrive(-driver.getRotation() * 0.95, 0);
-    	else
-    		driver.arcadeDrive(0, 0);
+		driver.getGyroController().setPID(0, 0, 0);
+		driver.arcadeDrive(-SmartDashboard.getNumber("Max speed", 0.7), 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	  return isTimedOut();
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-		System.out.println("Turned: " + SmartDashboard.getNumber("Gyro Value",0));
-    	driver.disableGyro();
-    	driver.arcadeDrive(0, 0);
-    	System.out.println(setPoint);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-		System.out.println("Turned: " + SmartDashboard.getNumber("Gyro Value",0));
-    	driver.disableGyro();
-    	driver.arcadeDrive(0, 0);
     }
 }

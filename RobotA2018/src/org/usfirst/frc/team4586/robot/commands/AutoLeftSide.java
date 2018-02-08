@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoCommandGroupLeft extends CommandGroup {
-	public AutoCommandGroupLeft() {
+public class AutoLeftSide extends CommandGroup {
+	public AutoLeftSide() {
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		System.out.println();
 		if (gameData.charAt(0) == 'L' && gameData.charAt(1) != 'L') {

@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4586.robot.commands.ArcadeDrive;
 import org.usfirst.frc.team4586.robot.commands.AutoCommandGroupLeft;
 import org.usfirst.frc.team4586.robot.commands.AutoPickCubeMid;
-import org.usfirst.frc.team4586.robot.commands.ExampleCommand;
 import org.usfirst.frc.team4586.robot.commands.LiftCubeByJoystick;
 import org.usfirst.frc.team4586.robot.subsystems.Climber;
 import org.usfirst.frc.team4586.robot.subsystems.CubeSystem;
@@ -166,8 +165,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("Use Gyro", false);
 		SmartDashboard.putBoolean("Allow Pre End Game Platforms", true);
 
-		SmartDashboard.putData("Encoder PID", driver.encoderController);
-		SmartDashboard.putData("Gyro PID", driver.gyroController);
+		SmartDashboard.putData("Encoder PID", driver.getEncoderController());
+		SmartDashboard.putData("Gyro PID", driver.getGyroController());
 	}
 
 	public void SmartDashBoardPereodic() {

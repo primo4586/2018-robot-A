@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
  */
 public class DrivingSpeedPID implements PIDOutput {
 	private double speed;
-
+	
 	public DrivingSpeedPID() {
 		speed = 0;
 	}
@@ -18,16 +18,18 @@ public class DrivingSpeedPID implements PIDOutput {
 
 	public void updateSpeed(double speed) {
 		this.speed = speed;
-
+		
 	}
 
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
 
-	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
-	}
+    // Put methods for controlling this subsystem
+    // here. Call these from Commands.
+
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        //setDefaultCommand(new MySpecialCommand());
+    }
+
 
 	@Override
 	public void pidWrite(double output) {
@@ -35,3 +37,4 @@ public class DrivingSpeedPID implements PIDOutput {
 		speed = output;
 	}
 }
+

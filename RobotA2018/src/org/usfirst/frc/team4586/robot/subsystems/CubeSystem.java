@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -20,7 +19,8 @@ public class CubeSystem extends Subsystem {
 	DigitalInput scaleSensor;
 	DigitalInput switchSensor;
 	DigitalInput floorSensor;
-
+    boolean isCubeCatcherOpen;
+    
 	public CubeSystem(Solenoid solenoid2, Solenoid solenoid1, Solenoid pushCube, Compressor compressor,
 			WPI_TalonSRX elevatorsMotor, DigitalInput scaleSensor, DigitalInput switchSensor,
 			DigitalInput floorSensor) {
@@ -32,74 +32,91 @@ public class CubeSystem extends Subsystem {
 		this.scaleSensor = scaleSensor;
 		this.switchSensor = switchSensor;
 		this.floorSensor = floorSensor;
-
+		this.isCubeCatcherOpen = solenoid1.get();
 	}
 
-	// checks if the pusher piston is opened
-	public boolean isOpenedPusher() {
-		return pushCube.get();
-	}
+    // checks if the pusher piston is opened
+    public boolean isOpenedPusher() {
+    	System.out.println("push " + pushCube.get());
+    	return pushCube.get();
+    }
 
-	public void setCubePusher(boolean isOpenedPusher) {
-		if (isOpenedPusher) {
-			pushCube.set(false);
-		} else {
-			pushCube.set(true);
-		}
-	}
+    public void setCubePusher(boolean isOpenedPusher) {
+		System.out.println("pusher turn to " + isOpenedPusher);
+    	pushCube.set(isOpenedPusher);
+    	System.out.println("pusher is " + pushCube.get());
+    }
 
-	// checks if the platforms' pistons are opened
-	public boolean isOpened() {
-		return (solenoid1.get() || solenoid2.get());
-	}
+    // checks if the platforms' pistons are opened
+    public boolean isOpened() {
+	return (this.isCubeCatcherOpen);
+    }
+    
+    public void setIsCubeCatcherOpen(boolean value)
+    {
+	this.isCubeCatcherOpen = value;
+    }
+//
+//    // set the pistons state
+//    public void setPiston1(boolean isOpened) {
+//	if (isOpened) {
+//	    solenoid2.set(false);
+//	} else {
+//	    solenoid1.set(true);
+//	}
+//    }
+//
+//    public void setPiston2(boolean isOpened) {
+//	if (isOpened) {
+//	    solenoid1.set(false);
+//	} else {
+//	    solenoid2.set(true);
+//	}
+//    }
 
-	// set the pistons state
-	public void setPiston1(boolean isOpened) {
-		if (isOpened) {
-			solenoid2.set(false);
-		} else {
-			solenoid1.set(true);
-		}
-	}
+    public void setPistonR(boolean toOpen) {
+	solenoid1.set(toOpen);
+	System.out.println("set 1 to " + toOpen);
+	System.out.println("1 " + this.solenoid1.get());
+    }
 
-	public void setPiston2(boolean isOpened) {
-		if (isOpened) {
-			solenoid1.set(false);
-		} else {
-			solenoid2.set(true);
-		}
-	}
+    public void setPistonL(boolean toOpen) {
+	solenoid2.set(toOpen);
 
-	// elevator's speed
-	public void setSpeedElevators(double speed) {
-		this.elevatorsMotor.set(speed);
-	}
+	System.out.println("set 2 to " + toOpen);
+	System.out.println("2 " + this.solenoid2.get());
+    }
 
-	public double getSpeedElevators() {
-		return this.elevatorsMotor.get();
-	}
+    // elevator's speed
+    public void setSpeedElevators(double speed) {
+	this.elevatorsMotor.set(speed);
+    }
 
-	// sensors
-	public boolean getFloorSensor() {
-		return floorSensor.get();
-	}
+    public double getSpeedElevators() {
+	return this.elevatorsMotor.get();
+    }
 
-	public boolean getSwitchSensor() {
-		return switchSensor.get();
-	}
+    // sensors
+    public boolean getFloorSensor() {
+	return !floorSensor.get();
+    }
 
-	public boolean getScaleSensor() {
-		return scaleSensor.get();
-	}
+    public boolean getSwitchSensor() {
+	return switchSensor.get();
+    }
 
-	public void stopElevators() {
-		this.elevatorsMotor.set(0);
-	}
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
+    public boolean getScaleSensor() {
+	return !scaleSensor.get();
+    }
 
-	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
-	}
+    public void stopElevators() {
+	this.elevatorsMotor.set(0);
+    }
+    // Put methods for controlling this subsystem
+    // here. Call these from Commands.
+
+    public void initDefaultCommand() {
+	// Set the default command for a subsystem here.
+	// setDefaultCommand(new MySpecialCommand());
+    }
 }

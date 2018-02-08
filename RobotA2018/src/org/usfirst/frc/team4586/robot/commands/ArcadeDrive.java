@@ -26,10 +26,9 @@ public class ArcadeDrive extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-
 		this.driver.resetGyro();
-		this.driver.setSetPoint(0);
-		this.driver.enable();
+		this.driver.setSetPointGyro(0);
+		this.driver.enableGyro();
 
 	}
 
@@ -45,10 +44,10 @@ public class ArcadeDrive extends Command {
 	private void drivingWithOutGyro() {
 		this.speed = SmartDashboard.getNumber("Driving direction", 1)
 				* ((this.oi.joystickDriver.getRawAxis(1) * SmartDashboard.getNumber("Max speed", 0))
-						+ oi.joystickDriver.getRawAxis(2) * 0.3 - oi.joystickDriver.getRawAxis(3) * 0.3);
-		this.rotation = SmartDashboard.getNumber("Driving direction", 1)
-				* ((this.oi.joystickDriver.getRawAxis(4) * SmartDashboard.getNumber("Max speed", 0))
-						+ oi.joystickDriver.getRawAxis(2) * 0.3 - oi.joystickDriver.getRawAxis(3) * 0.3);
+						+ ((this.oi.joystickDriver.getRawAxis(1)) / Math.abs(this.oi.joystickDriver.getRawAxis(1)))
+								* (oi.joystickDriver.getRawAxis(3) * 0.3 - oi.joystickDriver.getRawAxis(2) * 0.3));
+		this.rotation = SmartDashboard.getNumber("Driving direction", 1) * (this.oi.joystickDriver.getRawAxis(4))
+				* SmartDashboard.getNumber("Max Rotation Speed", 0.5);
 		if (Math.abs(speed) < 0.2) {
 			speed = 0;
 		}
@@ -61,10 +60,9 @@ public class ArcadeDrive extends Command {
 	private void drivingWithGyro() {
 		this.speed = SmartDashboard.getNumber("Driving direction", 1)
 				* ((this.oi.joystickDriver.getRawAxis(1) * SmartDashboard.getNumber("Max speed", 0))
-						+ oi.joystickDriver.getRawAxis(2) * 0.3 - oi.joystickDriver.getRawAxis(3) * 0.3);
-		this.rotation = SmartDashboard.getNumber("Driving direction", 1)
-				* ((this.oi.joystickDriver.getRawAxis(4) * SmartDashboard.getNumber("Max speed", 0))
-						+ oi.joystickDriver.getRawAxis(2) * 0.3 - oi.joystickDriver.getRawAxis(3) * 0.3);
+						+ ((this.oi.joystickDriver.getRawAxis(1)) / Math.abs(this.oi.joystickDriver.getRawAxis(1)))
+								* (oi.joystickDriver.getRawAxis(3) * 0.3 - oi.joystickDriver.getRawAxis(2) * 0.3));
+		this.rotation = SmartDashboard.getNumber("Driving direction", 1) * (this.oi.joystickDriver.getRawAxis(4));
 		if (Math.abs(speed) < 0.2) {
 			speed = 0;
 		}
@@ -87,14 +85,14 @@ public class ArcadeDrive extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		this.driver.disable();
+		this.driver.disableGyro();
 		this.driver.stopAllWheels();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		this.driver.disable();
+		this.driver.disableGyro();
 		this.driver.stopAllWheels();
 	}
 }
