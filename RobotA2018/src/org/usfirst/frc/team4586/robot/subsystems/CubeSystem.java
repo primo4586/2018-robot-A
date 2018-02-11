@@ -14,20 +14,23 @@ public class CubeSystem extends Subsystem {
 	Compressor compressor;
 	Solenoid solenoid1;
 	Solenoid solenoid2;
-	Solenoid pushCube;
+	Solenoid pushCubeOpen;
+	Solenoid pushCubeClose;
+	
 	WPI_TalonSRX elevatorsMotor;
 	DigitalInput scaleSensor;
 	DigitalInput switchSensor;
 	DigitalInput floorSensor;
     boolean isCubeCatcherOpen;
     
-	public CubeSystem(Solenoid solenoid2, Solenoid solenoid1, Solenoid pushCube, Compressor compressor,
+	public CubeSystem(Solenoid solenoid2, Solenoid solenoid1, Solenoid pushCubeOpen, Solenoid pushCubeClose, Compressor compressor,
 			WPI_TalonSRX elevatorsMotor, DigitalInput scaleSensor, DigitalInput switchSensor,
 			DigitalInput floorSensor) {
 		this.compressor = compressor;
 		this.solenoid1 = solenoid1;
 		this.solenoid2 = solenoid2;
-		this.pushCube = pushCube;
+		this.pushCubeOpen = pushCubeOpen;
+		this.pushCubeClose = pushCubeClose;
 		this.elevatorsMotor = elevatorsMotor;
 		this.scaleSensor = scaleSensor;
 		this.switchSensor = switchSensor;
@@ -37,14 +40,15 @@ public class CubeSystem extends Subsystem {
 
     // checks if the pusher piston is opened
     public boolean isOpenedPusher() {
-    	System.out.println("push " + pushCube.get());
-    	return pushCube.get();
+    	System.out.println("push " + pushCubeOpen.get());
+    	return pushCubeOpen.get();
     }
 
     public void setCubePusher(boolean isOpenedPusher) {
 		System.out.println("pusher turn to " + isOpenedPusher);
-    	pushCube.set(isOpenedPusher);
-    	System.out.println("pusher is " + pushCube.get());
+    	pushCubeOpen.set(isOpenedPusher);
+    	pushCubeClose.set(!isOpenedPusher);
+    	System.out.println("pusher is " + pushCubeOpen.get());
     }
 
     // checks if the platforms' pistons are opened

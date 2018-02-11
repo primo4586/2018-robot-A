@@ -30,7 +30,7 @@ public class AutoDrive extends Command {
 		driver.enableEncoder();
 		driver.setSetPointGyro(0);
 		driver.enableGyro();
-		setTimeout(1.5);
+		setTimeout(1);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -38,8 +38,9 @@ public class AutoDrive extends Command {
 		// System.out.println("Drive: " + SmartDashboard.getNumber("Encoder
 		// Distance",0) + ", Stiya: "
 		// + SmartDashboard.getNumber("Gyro Value",0));
-		driver.getGyroController().setPID(0.08, 0, 0.295);
-		driver.arcadeDrive(driver.getSpeed() * 0.8, -driver.getRotation());
+//		driver.getGyroController().setPID(0.08, 0, 0.295);
+//		driver.getEncoderController().setPID(0.013, 0, 0.2);
+		driver.arcadeDrive(driver.getSpeed() * 0.5, -driver.getRotation());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -56,9 +57,10 @@ public class AutoDrive extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		driver.disableGyro();
-		driver.disableEncoder();
-		driver.stopAllWheels();
+    	driver.getGyroController().disable();
+    	driver.getEncoderController().disable();
+    	driver.setLeft(0);
+    	driver.setRight(0);
 		// System.out.println("Drive: " + SmartDashboard.getNumber("Encoder
 		// Distance",0) + ", Stiya: "
 		// + SmartDashboard.getNumber("Gyro Value",0));
@@ -68,9 +70,10 @@ public class AutoDrive extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		driver.disableGyro();
-		driver.disableEncoder();
-		driver.stopAllWheels();
+    	driver.getGyroController().disable();
+    	driver.getEncoderController().disable();
+    	driver.setLeft(0);
+    	driver.setRight(0);
 		// System.out.println("Drive: " + SmartDashboard.getNumber("Encoder
 		// Distance",0) + ", Stiya: "
 		// + SmartDashboard.getNumber("Gyro Value",0));

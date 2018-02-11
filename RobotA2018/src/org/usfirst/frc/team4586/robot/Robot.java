@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
 	public static Driver driver;
 	Command m_autonomousCommand;
 	SendableChooser<Integer> m_chooser = new SendableChooser<>();
-
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -46,19 +46,19 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		RobotMap.Init();
 		climber = new Climber(RobotMap.climbMotor1, RobotMap.climbMotor2, RobotMap.compressor,
-				RobotMap.openLeftPlatfrom, RobotMap.openRightPlatfrom);
+				RobotMap.openLeftPlatfrom, RobotMap.closeLeftPlatfrom, RobotMap.openRightPlatfrom, RobotMap.closeRightPlatfrom);
 
-		cubeSystem = new CubeSystem(RobotMap.solenoidCube2, RobotMap.solenoidCube1, RobotMap.pushCube,
-				RobotMap.compressor, RobotMap.elevatorsMotor, RobotMap.scaleSensor, RobotMap.switchSensor,
-				RobotMap.floorSensor);
+		cubeSystem = new CubeSystem(RobotMap.solenoidCube2, RobotMap.solenoidCube1, RobotMap.pushCubeOpen,
+				RobotMap.pushCubeClose, RobotMap.compressor, RobotMap.elevatorsMotor, RobotMap.scaleSensor, 
+				RobotMap.switchSensor, RobotMap.floorSensor);
 		driver = new Driver(RobotMap.leftFrontMotor, RobotMap.leftBackMotor, RobotMap.rightFrontMotor,
-				RobotMap.rightBackMotor, RobotMap.gyro, RobotMap.drivingEncoder);
+				RobotMap.rightBackMotor, RobotMap.gyroSpi, RobotMap.drivingEncoder);
 		m_oi = new OI();
 		m_chooser.addDefault("Auto Left Side", 0);
 		// chooser.addObject("Auto Right Side", new AutoCommandGroupRight());
 		// chooser.addObject("AutoMiddle", new AutoCommandGroupMiddle());
 		m_chooser.addObject("Auto Middle Pickup", 1);
-		SmartDashBoardInit();
+		SmartDashBoardRobotInit();
 		SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
@@ -135,6 +135,10 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SmartDashBoardPereodic();
+		RobotMap.openLeftPlatfrom.set(SmartDashboard.getBoolean("sol 1", false));
+		RobotMap.openRightPlatfrom.set(SmartDashboard.getBoolean("sol 2", false));
+		RobotMap.closeLeftPlatfrom.set(SmartDashboard.getBoolean("sol 3", false));
+		RobotMap.closeRightPlatfrom.set(SmartDashboard.getBoolean("sol 4", false));
 	}
 
 	/**
@@ -144,9 +148,10 @@ public class Robot extends TimedRobot {
 	public void testPeriodic() {
 	}
 
-	public void SmartDashBoardInit() {
+	public void SmartDashBoardRobotInit() {
+
 		SmartDashboard.putNumber("Elevator Speed", 0.7);
-		SmartDashboard.putNumber("Driving Direction", 1);
+		SmartDashboard.putNumber("Driving Direction", -1);
 		SmartDashboard.putNumber("Max Speed", 0.7);
 		SmartDashboard.putNumber("Speed Climb Back", 0);
 		SmartDashboard.putNumber("Speed Climb Forward", 0);
@@ -154,8 +159,10 @@ public class Robot extends TimedRobot {
 		// sensors
 		SmartDashboard.putNumber("Gyro Angle", driver.getGyroAngle());
 		// TODO: check if the values are corrected
-		SmartDashboard.putNumber("Encoder Value ", driver.getSpeedEncoder());
-		SmartDashboard.putNumber("Encoder Rate ", driver.getDistenceEncoder());
+		SmartDashboard.putNumber("Encoder Distance", driver.getSpeedEncoder());
+		SmartDashboard.putNumber("Encoder Value", driver.getEncoderValue());
+		SmartDashboard.putNumber("Encoder Rate", driver.getSpeedEncoder());
+		
 
 		SmartDashboard.putBoolean("In scale", cubeSystem.getScaleSensor());
 		SmartDashboard.putBoolean("In floor", cubeSystem.getFloorSensor());
@@ -164,19 +171,34 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Teleop Gyro PID", driver.getGyroController());
 		SmartDashboard.putBoolean("Use Gyro", false);
 		SmartDashboard.putBoolean("Allow Pre End Game Platforms", true);
-
+		SmartDashboard.putBoolean("sol 1", false);
+		SmartDashboard.putBoolean("sol 2", false);
+		SmartDashboard.putBoolean("sol 3", false);
+		SmartDashboard.putBoolean("sol 4", false);
 		SmartDashboard.putData("Encoder PID", driver.getEncoderController());
 		SmartDashboard.putData("Gyro PID", driver.getGyroController());
+		SmartDashboard.putBoolean("Compressor", true);
 	}
 
 	public void SmartDashBoardPereodic() {
-		SmartDashboard.putNumber("Gyro Angle", driver.getGyroAngle());
+		SmartDashboard.putNumber("Gyro Angle", driver.getGyro());
 		// TODO: check if the values are corrected
-		SmartDashboard.putNumber("Encoder Value ", driver.getSpeedEncoder());
-		SmartDashboard.putNumber("Encoder Rate ", driver.getDistenceEncoder());
-
+		SmartDashboard.putNumber("Encoder Distance", driver.getEncoderDistance());
+		SmartDashboard.putNumber("Encoder Value", driver.getEncoderValue());
+		SmartDashboard.putNumber("Encoder Rate", driver.getSpeedEncoder());
+		SmartDashboard.putNumber("elevator current", RobotMap.elevatorsMotor.getOutputCurrent());
+		
 		SmartDashboard.putBoolean("In Scale", cubeSystem.getScaleSensor());
 		SmartDashboard.putBoolean("In Floor", cubeSystem.getFloorSensor());
 		SmartDashboard.putBoolean("In Switch", cubeSystem.getSwitchSensor());
+		
+		if (RobotMap.compressor.enabled() && !SmartDashboard.getBoolean("Compressor", false)) {
+			RobotMap.compressor.stop();
+		} else if (SmartDashboard.getBoolean("Compressor", false)) {
+			RobotMap.compressor.setClosedLoopControl(true);
+		}
+		
+		SmartDashboard.putBoolean("Compressor Pressure Switch", RobotMap.compressor.getPressureSwitchValue());
+		
 	}
 }

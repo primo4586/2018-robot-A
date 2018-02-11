@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team4586.robot;
 
+import org.usfirst.frc.team4586.robot.commands.AutoDrive;
 import org.usfirst.frc.team4586.robot.commands.CalibrateGyro;
 import org.usfirst.frc.team4586.robot.commands.CatchCube;
 import org.usfirst.frc.team4586.robot.commands.Climb;
@@ -36,7 +37,7 @@ public class OI {
 	public JoystickButton calibrateGyro;
 	public JoystickButton resetEncoder;
 	public JoystickButton cubePusher;
-	public JoystickButton autoTest;
+	public JoystickButton auto;
 	
 	//operator
 	public Joystick joystickOpertor; 
@@ -54,7 +55,7 @@ public class OI {
 		invert = new JoystickButton(joystickDriver , 4);
 		calibrateGyro = new JoystickButton(joystickDriver , 3);
 		//resetEncoder = new JoystickButton(joystickDriver , 2);
-		autoTest = new JoystickButton(joystickDriver, 2);
+		auto = new JoystickButton(joystickDriver, 2);
 		cubePusher = new JoystickButton(joystickDriver , 5);
 		catchCube = new JoystickButton(joystickDriver , 6);
 		
@@ -71,7 +72,8 @@ public class OI {
 		invert.whenPressed(new Invert());
 		calibrateGyro.whenPressed(new CalibrateGyro());
 		//resetEncoder.whenPressed(new ResetEncoder());
-		autoTest.whenPressed(new StartAuto());
+		auto.whenPressed(new AutoDrive(250));
+		
 		cubePusher.whenPressed(new CubePusher());
 		catchCube.whenPressed(new CatchCube());
 		

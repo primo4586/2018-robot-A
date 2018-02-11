@@ -31,7 +31,7 @@ public class CatchCube extends Command {
 	    this.cubeSystem.setPistonR(false);
 	    System.out.println("Close Right");
 	}
-	setTimeout(0.05);
+	setTimeout(0.1);
     }
 
     // Called repeatedly when this Command is scheduled to run

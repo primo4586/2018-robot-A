@@ -2,6 +2,7 @@ package org.usfirst.frc.team4586.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
@@ -18,7 +19,7 @@ public class Driver extends Subsystem {
 	WPI_TalonSRX leftBackMotor;
 	WPI_TalonSRX rightFrontMotor;
 	WPI_TalonSRX rightBackMotor;
-	AnalogGyro gyro;
+	ADXRS450_Gyro gyro;
 	Encoder encoder;
 	SpeedControllerGroup rightController, leftController;
 	DifferentialDrive diffDrive;
@@ -32,18 +33,17 @@ public class Driver extends Subsystem {
 	PIDController encoderController;
 
 	public Driver(WPI_TalonSRX leftFrontMotor, WPI_TalonSRX leftBackMotor, WPI_TalonSRX rightFrontMotor,
-			WPI_TalonSRX rightBackMotor, AnalogGyro gyro, Encoder drivingEncoder) {
+			WPI_TalonSRX rightBackMotor, ADXRS450_Gyro gyroSpi, Encoder drivingEncoder) {
 		this.leftFrontMotor = leftFrontMotor;
 		this.leftBackMotor = leftBackMotor;
 		this.rightFrontMotor = rightFrontMotor;
 		this.rightBackMotor = rightBackMotor;
-		this.gyro = gyro;
-		this.encoder = drivingEncoder;
-		this.encoder.setDistancePerPulse(0.47877872);
+		this.gyro = gyroSpi;
+		this.encoder = drivingEncoder;///yu//yu*y//yu*///////////yu*/*
+		encoder.setDistancePerPulse(0.0239);/////////************************************************************************************************************************************************************************************************************************h*hhh-);
 		this.rightController = new SpeedControllerGroup(this.rightBackMotor, this.rightFrontMotor);
 		this.leftController = new SpeedControllerGroup(this.leftBackMotor, this.leftFrontMotor);
 		this.diffDrive = new DifferentialDrive(this.leftController, this.rightController);
-
 		this.encoderSource = new DrivingEncoderPID(drivingEncoder);
 		this.speedPID =  new DrivingSpeedPID();
 		this.encoderController = new PIDController(0, 0, 0, this.encoderSource, this.speedPID);
@@ -125,7 +125,7 @@ public class Driver extends Subsystem {
 	}
 
 	public double getGyroAngle() {
-		return this.gyro.getAngle();
+		return this.gyro.getAngle() * 10;
 	}
 
 	// calibrates the gyro
@@ -135,19 +135,19 @@ public class Driver extends Subsystem {
 
 	// encoder
 	public double getSpeedEncoder() {
-		return encoderController.get();
-	}
-
-	public double getDistenceEncoder() {
-		return getEncoderDistance();
+		return encoder.getRate();
 	}
 
 	public double getEncoderDistance() {
-		return -encoder.getDistance();
+		return encoder.getDistance();
 	}
-
+	
+	public double getEncoderValue() {
+		return encoder.get();
+	}
+	
 	public void resetEncoder() {
-		this.encoderController.reset();
+		this.encoder.reset();
 	}
 
 	// drive
@@ -176,7 +176,7 @@ public class Driver extends Subsystem {
 	
 
 	public double getGyro() {
-		return gyro.getAngle() % 360;
+		return (gyro.getAngle() % 360) * 10;
 	}
 
 	public void initDefaultCommand() {

@@ -39,7 +39,7 @@ public class AutoDriveMap extends Command {
 		// + SmartDashboard.getNumber("Gyro Value",0));
 		driver.getGyroController().setPID(0.08, 0, 0.295);
 		driver.arcadeDrive(-driver.getRotation(),
-				map(this.setPoint - driver.getDistenceEncoder(), 0, this.setPoint, 0, 0.8));
+				map(this.setPoint - driver.getEncoderDistance(), 0, this.setPoint, 0, 0.8));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -13,30 +13,37 @@ public class Climber extends Subsystem {
 	Compressor compressor;
 	WPI_TalonSRX climbMotor1;
 	WPI_TalonSRX climbMotor2;
-	Solenoid openPlatfroms;
-	Solenoid closePlatfroms;
+	Solenoid openPlatformRight;
+	Solenoid closePlatformRight;
+	Solenoid openPlatformLeft;
+	Solenoid closePlatformLeft;
 	boolean isOpen;
 
-	public Climber(WPI_TalonSRX climbMotor1, WPI_TalonSRX climbMotor2, Compressor compressor, Solenoid closePlatfroms,
-			Solenoid openPlatfroms) {
+	public Climber(WPI_TalonSRX climbMotor1, WPI_TalonSRX climbMotor2, Compressor compressor, Solenoid openPlatformLeft, Solenoid closePlatformLeft,
+			Solenoid openPlatformRight, Solenoid closePlatformRight) {
 		this.isOpen = false;
 		this.climbMotor1 = climbMotor1;
 		this.climbMotor2 = climbMotor2;
 		this.compressor = compressor;
-		this.openPlatfroms = openPlatfroms;
-		this.closePlatfroms = closePlatfroms;
+		this.openPlatformRight = openPlatformRight;
+		this.closePlatformRight = closePlatformRight;
+		this.openPlatformLeft = openPlatformLeft;
+		this.closePlatformLeft = closePlatformLeft;
 	}
 
     // checks if the platforms' pistons are opened
     public boolean isOpened() {
-	return openPlatfroms.get();
+	return openPlatformRight.get();
     }
 
     // set the pistons state
     public void setPiston(boolean isOpened) {
 
-	openPlatfroms.set(!isOpened);
-	closePlatfroms.set(isOpened);
+	openPlatformRight.set(isOpened);
+	closePlatformRight.set(!isOpened);
+	
+	openPlatformLeft.set(isOpened);
+	closePlatformLeft.set(!isOpened);
     }
 
     public void setSpeedClimb(double speed) {
@@ -45,17 +52,22 @@ public class Climber extends Subsystem {
     }
 
     public void setPlatforms(boolean open) {
-	this.closePlatfroms.set(!open);
-	this.openPlatfroms.set(open);
+    	openPlatformRight.set(open);
+    	closePlatformRight.set(!open);
+    	
+    	openPlatformLeft.set(open);
+    	closePlatformLeft.set(!open);
     }
 
     public void setPlatformLeft(boolean open) {
-	this.closePlatfroms.set(open);
+	this.closePlatformLeft.set(!open);
+	this.openPlatformLeft.set(open);
 
     }
 
     public void setPlatformRight(boolean open) {
-	this.openPlatfroms.set(open);
+	this.openPlatformRight.set(open);
+	this.closePlatformRight.set(!open);
     }
 
     public void stopAllClimberMotors() {

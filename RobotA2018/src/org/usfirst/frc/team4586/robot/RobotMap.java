@@ -7,12 +7,15 @@
 
 package org.usfirst.frc.team4586.robot;
 
+import com.ctre.phoenix.CTREJNIWrapper;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 
 /**
@@ -31,9 +34,13 @@ public class RobotMap {
 	public static WPI_TalonSRX climbMotor2;
 	public static Solenoid openLeftPlatfrom;
 	public static Solenoid openRightPlatfrom;
-	public static Solenoid pushCube;
+	public static Solenoid closeLeftPlatfrom;
+	public static Solenoid closeRightPlatfrom;
+	public static Solenoid pushCubeOpen;
+	public static Solenoid pushCubeClose;
 	public static WPI_TalonSRX elevatorsMotor;
 	public static AnalogGyro gyro;
+	public static ADXRS450_Gyro  gyroSpi;
 	public static Encoder drivingEncoder;
 	public static DigitalInput scaleSensor;
 	public static DigitalInput switchSensor;
@@ -44,24 +51,38 @@ public class RobotMap {
 
 	public static void Init() {
 		// TODO Check connections
-		leftFrontMotor = new WPI_TalonSRX(2);
-		leftBackMotor = new WPI_TalonSRX(4);
-		rightFrontMotor = new WPI_TalonSRX(8);
-		rightBackMotor = new WPI_TalonSRX(1);
-		climbMotor1 = new WPI_TalonSRX(9);
-		climbMotor2 = new WPI_TalonSRX(5);
-		openLeftPlatfrom = new Solenoid(9);
-		openRightPlatfrom = new Solenoid(5);
-		elevatorsMotor = new WPI_TalonSRX(2);
-		gyro = new AnalogGyro(0);
-		drivingEncoder = new Encoder(0, 0);
-		scaleSensor = new DigitalInput(0);
-		switchSensor = new DigitalInput(0);
-		floorSensor = new DigitalInput(0);
+		leftFrontMotor = new WPI_TalonSRX(1);
+		leftFrontMotor.setSafetyEnabled(false);
+		leftBackMotor = new WPI_TalonSRX(0);
+		leftBackMotor.setSafetyEnabled(false);
+		rightFrontMotor = new WPI_TalonSRX(7);
+		rightFrontMotor.setSafetyEnabled(false);
+		rightBackMotor = new WPI_TalonSRX(6);
+		rightBackMotor.setSafetyEnabled(false);
+		climbMotor1 = new WPI_TalonSRX(5);
+		climbMotor1.setSafetyEnabled(false);
+		climbMotor2 = new WPI_TalonSRX(2);
+		climbMotor2.setSafetyEnabled(false);
+		elevatorsMotor = new WPI_TalonSRX(3);
+		elevatorsMotor.setSafetyEnabled(false);
+
 		compressor = new Compressor();
-		solenoidCube1 = new Solenoid(0);
-		solenoidCube2 = new Solenoid(0);
-		pushCube = new Solenoid(0);
+		compressor.setClosedLoopControl(true);
+		solenoidCube1 = new Solenoid(6);
+		solenoidCube2 = new Solenoid(7);
+		pushCubeOpen = new Solenoid(4); //ID'S ARE 4 AND 5  - DOUBLE SOLENOID
+		pushCubeClose = new Solenoid(5);
+		openLeftPlatfrom = new Solenoid(2); // ID'S ARE 2 AND 3  - DOUBLE SOLENOID
+		closeLeftPlatfrom = new Solenoid(3);
+		openRightPlatfrom = new Solenoid(0); // ID'S ARE 0 AND 1  - DOUBLE SOLENOID
+		closeRightPlatfrom = new Solenoid(1);
+		
+		gyroSpi = new ADXRS450_Gyro();
+		//gyro = new AnalogGyro(0);
+		drivingEncoder = new Encoder(9, 8);
+		scaleSensor = new DigitalInput(2);
+		switchSensor = new DigitalInput(0);
+		floorSensor = new DigitalInput(1);
 	}
 
 	// For example to map the left and right motors, you could define the

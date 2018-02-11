@@ -42,11 +42,11 @@ public class ArcadeDrive extends Command {
 	}
 
 	private void drivingWithOutGyro() {
-		this.speed = SmartDashboard.getNumber("Driving direction", 1)
-				* ((this.oi.joystickDriver.getRawAxis(1) * SmartDashboard.getNumber("Max speed", 0))
-						+ ((this.oi.joystickDriver.getRawAxis(1)) / Math.abs(this.oi.joystickDriver.getRawAxis(1)))
-								* (oi.joystickDriver.getRawAxis(3) * 0.3 - oi.joystickDriver.getRawAxis(2) * 0.3));
-		this.rotation = SmartDashboard.getNumber("Driving direction", 1) * (this.oi.joystickDriver.getRawAxis(4))
+//		System.out.println(SmartDashboard.getKeys());
+		this.speed = SmartDashboard.getNumber("Driving Direction", 1)
+				* ((this.oi.joystickDriver.getRawAxis(1) * SmartDashboard.getNumber("Max speed", 0.7)))
+								+ (oi.joystickDriver.getRawAxis(3) * 0.3 - oi.joystickDriver.getRawAxis(2) * 0.3);
+		this.rotation = (this.oi.joystickDriver.getRawAxis(4))
 				* SmartDashboard.getNumber("Max Rotation Speed", 0.5);
 		if (Math.abs(speed) < 0.2) {
 			speed = 0;
@@ -54,6 +54,7 @@ public class ArcadeDrive extends Command {
 		if (Math.abs(rotation) < 0.2) {
 			rotation = 0;
 		}
+//		System.out.println("drive " + this.speed);
 		this.driver.arcadeDrive(speed, rotation);
 	}
 
