@@ -19,7 +19,7 @@ public class Driver extends Subsystem {
 	WPI_TalonSRX leftBackMotor;
 	WPI_TalonSRX rightFrontMotor;
 	WPI_TalonSRX rightBackMotor;
-	ADXRS450_Gyro gyro;
+	AnalogGyro gyro;
 	Encoder encoder;
 	SpeedControllerGroup rightController, leftController;
 	DifferentialDrive diffDrive;
@@ -33,12 +33,12 @@ public class Driver extends Subsystem {
 	PIDController encoderController;
 
 	public Driver(WPI_TalonSRX leftFrontMotor, WPI_TalonSRX leftBackMotor, WPI_TalonSRX rightFrontMotor,
-			WPI_TalonSRX rightBackMotor, ADXRS450_Gyro gyroSpi, Encoder drivingEncoder) {
+			WPI_TalonSRX rightBackMotor, AnalogGyro gyro, Encoder drivingEncoder) {
 		this.leftFrontMotor = leftFrontMotor;
 		this.leftBackMotor = leftBackMotor;
 		this.rightFrontMotor = rightFrontMotor;
 		this.rightBackMotor = rightBackMotor;
-		this.gyro = gyroSpi;
+		this.gyro = gyro;
 		this.encoder = drivingEncoder;///yu//yu*y//yu*///////////yu*/*
 		encoder.setDistancePerPulse(0.0239);/////////************************************************************************************************************************************************************************************************************************h*hhh-);
 		this.rightController = new SpeedControllerGroup(this.rightBackMotor, this.rightFrontMotor);

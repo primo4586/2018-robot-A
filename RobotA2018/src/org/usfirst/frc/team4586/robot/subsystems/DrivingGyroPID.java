@@ -6,9 +6,9 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 
 public class DrivingGyroPID implements PIDSource {
-	ADXRS450_Gyro gyro;
+	AnalogGyro gyro;
 	
-	public DrivingGyroPID(ADXRS450_Gyro gyro2) {
+	public DrivingGyroPID(AnalogGyro gyro2) {
 		this.gyro = gyro2;
 	}
 	

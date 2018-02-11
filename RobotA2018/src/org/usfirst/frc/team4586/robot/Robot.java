@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
 	public static Driver driver;
 	Command m_autonomousCommand;
 	SendableChooser<Integer> m_chooser = new SendableChooser<>();
-	
+//	int i = 0;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
 				RobotMap.pushCubeClose, RobotMap.compressor, RobotMap.elevatorsMotor, RobotMap.scaleSensor, 
 				RobotMap.switchSensor, RobotMap.floorSensor);
 		driver = new Driver(RobotMap.leftFrontMotor, RobotMap.leftBackMotor, RobotMap.rightFrontMotor,
-				RobotMap.rightBackMotor, RobotMap.gyroSpi, RobotMap.drivingEncoder);
+				RobotMap.rightBackMotor, RobotMap.gyro, RobotMap.drivingEncoder);
 		m_oi = new OI();
 		m_chooser.addDefault("Auto Left Side", 0);
 		// chooser.addObject("Auto Right Side", new AutoCommandGroupRight());
@@ -123,6 +123,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		System.out.println("init");
 		Scheduler.getInstance().add(new ArcadeDrive());
 		Scheduler.getInstance().add(new LiftCubeByJoystick());
 
@@ -135,10 +136,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SmartDashBoardPereodic();
-		RobotMap.openLeftPlatfrom.set(SmartDashboard.getBoolean("sol 1", false));
-		RobotMap.openRightPlatfrom.set(SmartDashboard.getBoolean("sol 2", false));
-		RobotMap.closeLeftPlatfrom.set(SmartDashboard.getBoolean("sol 3", false));
-		RobotMap.closeRightPlatfrom.set(SmartDashboard.getBoolean("sol 4", false));
+//		SmartDashboard.putNumber("periodic", ++i);
 	}
 
 	/**
@@ -164,9 +162,9 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Encoder Rate", driver.getSpeedEncoder());
 		
 
-		SmartDashboard.putBoolean("In scale", cubeSystem.getScaleSensor());
-		SmartDashboard.putBoolean("In floor", cubeSystem.getFloorSensor());
-		SmartDashboard.putBoolean("In switch", cubeSystem.getSwitchSensor());
+		SmartDashboard.putBoolean("In Scale", cubeSystem.getScaleSensor());
+		SmartDashboard.putBoolean("In Floor", cubeSystem.getFloorSensor());
+		SmartDashboard.putBoolean("In Switch", cubeSystem.getSwitchSensor());
 
 		SmartDashboard.putData("Teleop Gyro PID", driver.getGyroController());
 		SmartDashboard.putBoolean("Use Gyro", false);

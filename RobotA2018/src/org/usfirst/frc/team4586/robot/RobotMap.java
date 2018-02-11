@@ -40,7 +40,6 @@ public class RobotMap {
 	public static Solenoid pushCubeClose;
 	public static WPI_TalonSRX elevatorsMotor;
 	public static AnalogGyro gyro;
-	public static ADXRS450_Gyro  gyroSpi;
 	public static Encoder drivingEncoder;
 	public static DigitalInput scaleSensor;
 	public static DigitalInput switchSensor;
@@ -76,9 +75,7 @@ public class RobotMap {
 		closeLeftPlatfrom = new Solenoid(3);
 		openRightPlatfrom = new Solenoid(0); // ID'S ARE 0 AND 1  - DOUBLE SOLENOID
 		closeRightPlatfrom = new Solenoid(1);
-		
-		gyroSpi = new ADXRS450_Gyro();
-		//gyro = new AnalogGyro(0);
+		gyro = new AnalogGyro(0);
 		drivingEncoder = new Encoder(9, 8);
 		scaleSensor = new DigitalInput(2);
 		switchSensor = new DigitalInput(0);
