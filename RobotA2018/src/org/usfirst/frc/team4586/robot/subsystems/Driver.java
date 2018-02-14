@@ -26,11 +26,11 @@ public class Driver extends Subsystem {
 
 	private DrivingGyroPID gyroSource;
 	private DrivingRotationPID rotationPID;
-	PIDController gyroController;
+	public PIDController gyroController;
 	
 	private DrivingEncoderPID encoderSource;
 	private DrivingSpeedPID speedPID;
-	PIDController encoderController;
+	public PIDController encoderController;
 
 	public Driver(WPI_TalonSRX leftFrontMotor, WPI_TalonSRX leftBackMotor, WPI_TalonSRX rightFrontMotor,
 			WPI_TalonSRX rightBackMotor, AnalogGyro gyro, Encoder drivingEncoder) {
@@ -39,22 +39,22 @@ public class Driver extends Subsystem {
 		this.rightFrontMotor = rightFrontMotor;
 		this.rightBackMotor = rightBackMotor;
 		this.gyro = gyro;
-		this.encoder = drivingEncoder;///yu//yu*y//yu*///////////yu*/*
-		encoder.setDistancePerPulse(0.0239);/////////************************************************************************************************************************************************************************************************************************h*hhh-);
+		this.encoder = drivingEncoder;
+		encoder.setDistancePerPulse(0.0239);
 		this.rightController = new SpeedControllerGroup(this.rightBackMotor, this.rightFrontMotor);
 		this.leftController = new SpeedControllerGroup(this.leftBackMotor, this.leftFrontMotor);
 		this.diffDrive = new DifferentialDrive(this.leftController, this.rightController);
 		this.encoderSource = new DrivingEncoderPID(drivingEncoder);
 		this.speedPID =  new DrivingSpeedPID();
-		this.encoderController = new PIDController(0, 0, 0, this.encoderSource, this.speedPID);
+		this.encoderController = new PIDController(0.025, 0, 0.01, this.encoderSource, this.speedPID);
 		this.gyroSource = new DrivingGyroPID(this.gyro);
 		this.rotationPID = new DrivingRotationPID();
-		this.gyroController = new PIDController(0, 0, 0, this.gyroSource, this.rotationPID); // Driving
-																						// forward
-																						// PID
-																						// 0.13,
-																						// 0.005,
-																						// 0.023
+		this.gyroController = new PIDController(-0.118, 0.0, 0.1, this.gyroSource, this.rotationPID); 
+		encoderController.setAbsoluteTolerance(0.7);
+		
+		//PID Values - 
+		//-0.035, 0.0, 0.01 - Gyro PID Turn
+		//0.025, 0, 0.01 - Encoder PID Drive
 		gyroController.setAbsoluteTolerance(1);
 	}
 
@@ -125,9 +125,24 @@ public class Driver extends Subsystem {
 	}
 
 	public double getGyroAngle() {
-		return this.gyro.getAngle() * 10;
+		return this.gyro.getAngle();
+	}
+	
+	
+	
+	public double getPIDspeed() {
+		return speedPID.getSpeed();
 	}
 
+	/*public double getPIDRotation() {
+		return rotation.getRotation();
+	}*/
+	
+	public double getPIDRotationInPlace() {
+		return rotationPID.getRotation();
+	}
+	
+	
 	// calibrates the gyro
 	public void calibrateGyro() {
 		this.gyro.calibrate();
@@ -176,7 +191,7 @@ public class Driver extends Subsystem {
 	
 
 	public double getGyro() {
-		return (gyro.getAngle() % 360) * 10;
+		return (gyro.getAngle() % 360);
 	}
 
 	public void initDefaultCommand() {

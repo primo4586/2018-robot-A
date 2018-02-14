@@ -106,7 +106,7 @@ public class CubeSystem extends Subsystem {
     }
 
     public boolean getSwitchSensor() {
-	return switchSensor.get();
+	return !switchSensor.get();
     }
 
     public boolean getScaleSensor() {

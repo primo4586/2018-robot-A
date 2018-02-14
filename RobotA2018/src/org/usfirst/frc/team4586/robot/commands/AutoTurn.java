@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AutoTurn extends Command {
 	public Driver driver;
 	double setPoint;
+	double kP;
+	double prevError;
+	double kD;
 
     public AutoTurn(double setPoint) {
         // Use requires() here to declare subsystem dependencies
@@ -23,19 +26,26 @@ public class AutoTurn extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	//setPoint = SmartDashboard.getNumber("GYRO Setpoint",0);
-    	setTimeout(1.15);
-    	driver.setSetPointGyro(setPoint);
-    	driver.enableGyro();
+    	setTimeout(1);
+    	driver.setGyroControllerSetPoint(setPoint);
+    	driver.gyroController.enable();
     	driver.resetGyro();
+    	kP = SmartDashboard.getNumber("kP", 0);
+    	kD = SmartDashboard.getNumber("kD", 0);
+    	prevError = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		driver.getGyroController().setPID(0.08, 0, 0.3);
-    	if (Math.abs(driver.getGyroAngle() - setPoint) >= 2) 
-    		driver.arcadeDrive(-driver.getRotation() * 0.95, 0);
+    	double error = setPoint - driver.getGyro();
+    	double der = (error - prevError) / 0.2;
+    	double drcw = kD*der;
+    	double prcw = kP*error;
+    	if (Math.abs(driver.getGyro() - setPoint) >= 1) 
+    		driver.arcadeDrive(0,(prcw + drcw) * 0.95);
     	else
     		driver.arcadeDrive(0, 0);
+    	prevError = error;
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -46,7 +56,7 @@ public class AutoTurn extends Command {
     // Called once after isFinished returns true
     protected void end() {
 		System.out.println("Turned: " + SmartDashboard.getNumber("Gyro Value",0));
-    	driver.disableGyro();
+    	driver.gyroController.disable();
     	driver.arcadeDrive(0, 0);
     	System.out.println(setPoint);
     }
@@ -55,7 +65,7 @@ public class AutoTurn extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
 		System.out.println("Turned: " + SmartDashboard.getNumber("Gyro Value",0));
-    	driver.disableGyro();
+    	driver.gyroController.disable();
     	driver.arcadeDrive(0, 0);
     }
 }

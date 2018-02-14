@@ -148,20 +148,20 @@ public class Robot extends TimedRobot {
 
 	public void SmartDashBoardRobotInit() {
 
-		SmartDashboard.putNumber("Elevator Speed", 0.7);
+		SmartDashboard.putNumber("Elevator Speed", 1);
 		SmartDashboard.putNumber("Driving Direction", -1);
 		SmartDashboard.putNumber("Max Speed", 0.7);
 		SmartDashboard.putNumber("Speed Climb Back", 0);
 		SmartDashboard.putNumber("Speed Climb Forward", 0);
-
+		SmartDashboard.putNumber("kP", 0.11); //0.11
+		SmartDashboard.putNumber("kPD", 0.15);
 		// sensors
 		SmartDashboard.putNumber("Gyro Angle", driver.getGyroAngle());
 		// TODO: check if the values are corrected
 		SmartDashboard.putNumber("Encoder Distance", driver.getSpeedEncoder());
 		SmartDashboard.putNumber("Encoder Value", driver.getEncoderValue());
 		SmartDashboard.putNumber("Encoder Rate", driver.getSpeedEncoder());
-		
-
+		SmartDashboard.putNumber("kD", 0.13); //0.13
 		SmartDashboard.putBoolean("In Scale", cubeSystem.getScaleSensor());
 		SmartDashboard.putBoolean("In Floor", cubeSystem.getFloorSensor());
 		SmartDashboard.putBoolean("In Switch", cubeSystem.getSwitchSensor());
@@ -175,12 +175,13 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("sol 4", false);
 		SmartDashboard.putData("Encoder PID", driver.getEncoderController());
 		SmartDashboard.putData("Gyro PID", driver.getGyroController());
-		SmartDashboard.putBoolean("Compressor", true);
+		SmartDashboard.putNumber("Speed climb left", 1);
+		SmartDashboard.putNumber("Speed climb right", 1);
 	}
 
 	public void SmartDashBoardPereodic() {
 		SmartDashboard.putNumber("Gyro Angle", driver.getGyro());
-		// TODO: check if the values are corrected
+		// TODO: check if the values are cosrrected
 		SmartDashboard.putNumber("Encoder Distance", driver.getEncoderDistance());
 		SmartDashboard.putNumber("Encoder Value", driver.getEncoderValue());
 		SmartDashboard.putNumber("Encoder Rate", driver.getSpeedEncoder());
@@ -190,11 +191,11 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("In Floor", cubeSystem.getFloorSensor());
 		SmartDashboard.putBoolean("In Switch", cubeSystem.getSwitchSensor());
 		
-		if (RobotMap.compressor.enabled() && !SmartDashboard.getBoolean("Compressor", false)) {
-			RobotMap.compressor.stop();
-		} else if (SmartDashboard.getBoolean("Compressor", false)) {
-			RobotMap.compressor.setClosedLoopControl(true);
-		}
+//		if (RobotMap.compressor.enabled() && !SmartDashboard.getBoolean("Compressor", false)) {
+//			RobotMap.compressor.stop();
+//		} else if (SmartDashboard.getBoolean("Compressor", false)) {
+//			RobotMap.compressor.setClosedLoopControl(true);
+//		}
 		
 		SmartDashboard.putBoolean("Compressor Pressure Switch", RobotMap.compressor.getPressureSwitchValue());
 		

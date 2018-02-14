@@ -39,7 +39,7 @@ public class DrivingEncoderPID implements PIDSource {
 	@Override
 	public double pidGet() {
 		// TODO Auto-generated method stub
-		return -encoder.getDistance();
+		return encoder.getDistance();
 	}
 }
 

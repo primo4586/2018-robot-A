@@ -24,24 +24,24 @@ public class CatchCube extends Command {
 	this.isOpenedBothPistons = false;
 	isToOpen = cubeSystem.isOpened();
 	if (!isToOpen) {
-	    this.cubeSystem.setPistonL(true);
+	    this.cubeSystem.setPistonR(true);
 	    System.out.println("Open Left");
 
 	} else {
-	    this.cubeSystem.setPistonR(false);
+	    this.cubeSystem.setPistonL(false);
 	    System.out.println("Close Right");
 	}
-	setTimeout(0.1);
+	setTimeout(0.2);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 	if (isTimedOut()) {
 	    if (!isToOpen) {
-		this.cubeSystem.setPistonR(true);
+		this.cubeSystem.setPistonL(true);
 		 System.out.println("Open Right");
     	} else {
-		this.cubeSystem.setPistonL(false);
+		this.cubeSystem.setPistonR(false);
 		 System.out.println("Close Left");
 	    }
 	    this.isOpenedBothPistons = true;

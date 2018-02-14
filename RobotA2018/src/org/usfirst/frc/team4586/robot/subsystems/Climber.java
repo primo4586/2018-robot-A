@@ -50,6 +50,14 @@ public class Climber extends Subsystem {
 	this.climbMotor1.set(speed);
 	this.climbMotor2.set(speed);
     }
+    
+    public void setSpeedClimbL(double speed) {
+    	this.climbMotor1.set(speed);
+    }
+    
+    public void setSpeedClimbR(double speed) {
+    	this.climbMotor2.set(speed);
+    }
 
     public void setPlatforms(boolean open) {
     	openPlatformRight.set(open);

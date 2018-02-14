@@ -75,6 +75,7 @@ public class RobotMap {
 		closeLeftPlatfrom = new Solenoid(3);
 		openRightPlatfrom = new Solenoid(0); // ID'S ARE 0 AND 1  - DOUBLE SOLENOID
 		closeRightPlatfrom = new Solenoid(1);
+		
 		gyro = new AnalogGyro(0);
 		drivingEncoder = new Encoder(9, 8);
 		scaleSensor = new DigitalInput(2);
