@@ -27,7 +27,7 @@ public class AutoDrive extends Command {
     	driver.encoderController.enable();
     	driver.setGyroControllerSetPoint(0);
     	driver.gyroController.enable();
-    	setTimeout(1);
+    	setTimeout(15);
     	kP = SmartDashboard.getNumber("kPD", 0);
     	System.out.println(kP);
     }
@@ -36,7 +36,7 @@ public class AutoDrive extends Command {
     protected void execute() {
     	double error = 0 - driver.getGyro();
     	double prcw = kP * error; //aka loyshamen
-    	driver.arcadeDrive(driver.getPIDspeed(), prcw);
+    	driver.arcadeDrive(driver.getPIDspeed() * 0.75, prcw);
     }
 
 

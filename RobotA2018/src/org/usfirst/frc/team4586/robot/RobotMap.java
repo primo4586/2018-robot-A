@@ -67,8 +67,8 @@ public class RobotMap {
 
 		compressor = new Compressor();
 		compressor.setClosedLoopControl(true);
-		solenoidCube1 = new Solenoid(6);
-		solenoidCube2 = new Solenoid(7);
+		solenoidCube1 = new Solenoid(7);
+		solenoidCube2 = new Solenoid(6);
 		pushCubeOpen = new Solenoid(4); //ID'S ARE 4 AND 5  - DOUBLE SOLENOID
 		pushCubeClose = new Solenoid(5);
 		openLeftPlatfrom = new Solenoid(2); // ID'S ARE 2 AND 3  - DOUBLE SOLENOID

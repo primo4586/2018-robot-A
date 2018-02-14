@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4586.robot.commands.ArcadeDrive;
-import org.usfirst.frc.team4586.robot.commands.AutoCommandGroupLeft;
+import org.usfirst.frc.team4586.robot.commands.AutoDrive;
 import org.usfirst.frc.team4586.robot.commands.AutoPickCubeMid;
 import org.usfirst.frc.team4586.robot.commands.LiftCubeByJoystick;
 import org.usfirst.frc.team4586.robot.subsystems.Climber;
@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
 		driver = new Driver(RobotMap.leftFrontMotor, RobotMap.leftBackMotor, RobotMap.rightFrontMotor,
 				RobotMap.rightBackMotor, RobotMap.gyro, RobotMap.drivingEncoder);
 		m_oi = new OI();
-		m_chooser.addDefault("Auto Left Side", 0);
+		m_chooser.addDefault("Auto drive straight", 0);
 		// chooser.addObject("Auto Right Side", new AutoCommandGroupRight());
 		// chooser.addObject("AutoMiddle", new AutoCommandGroupMiddle());
 		m_chooser.addObject("Auto Middle Pickup", 1);
@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		if (m_chooser.getSelected() == 0) {
-			m_autonomousCommand = new AutoCommandGroupLeft();
+			m_autonomousCommand = new AutoDrive(450);
 		} else if (m_chooser.getSelected() == 1) {
 			m_autonomousCommand = new AutoPickCubeMid();
 		}

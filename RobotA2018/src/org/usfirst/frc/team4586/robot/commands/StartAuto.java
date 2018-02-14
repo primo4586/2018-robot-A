@@ -11,6 +11,6 @@ public class StartAuto extends CommandGroup {
     	addSequential(new LiftByTime(1, true)); //Lifts up the ele
     	addParallel(new CatchCube()); //Open the claws
     	addSequential(new AutoDriveTime(4)); //Drive a desired distance/time
-    	addParallel(new AutoLowerCloseUp()); //Lowers the ele, closes the claws and lifts it up a little
+    	addParallel(new AutoUpOpen()); //Lowers the ele, closes the claws and lifts it up a little
     }
 }

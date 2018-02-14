@@ -4,11 +4,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
+ *
  */
-public class AutoLowerCloseUp extends CommandGroup {
+public class AutoUpOpen extends CommandGroup {
 
-    public AutoLowerCloseUp() {
-    	addParallel(new LiftByTime(1, false)); //Lifts down the ele
+    public AutoUpOpen() {
+    	addParallel(new LiftByTime(1.5, true)); //Lifts down the ele
     	addSequential(new CatchCube()); //Closes the claws
     }
 }
