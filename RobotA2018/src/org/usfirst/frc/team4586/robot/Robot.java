@@ -46,7 +46,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		RobotMap.Init();
 		climber = new Climber(RobotMap.climbMotor1, RobotMap.climbMotor2, RobotMap.compressor,
-				RobotMap.openLeftPlatfrom, RobotMap.closeLeftPlatfrom, RobotMap.openRightPlatfrom, RobotMap.closeRightPlatfrom);
+				RobotMap.openPlatfrom, RobotMap.closePlatfrom);
 
 		cubeSystem = new CubeSystem(RobotMap.solenoidCube2, RobotMap.solenoidCube1, RobotMap.pushCubeOpen,
 				RobotMap.pushCubeClose, RobotMap.compressor, RobotMap.elevatorsMotor, RobotMap.scaleSensor, 
@@ -149,10 +149,9 @@ public class Robot extends TimedRobot {
 	public void SmartDashBoardRobotInit() {
 
 		SmartDashboard.putNumber("Elevator Speed", 1);
+		SmartDashboard.putNumber("Delay Hands", 0.0);
 		SmartDashboard.putNumber("Driving Direction", -1);
 		SmartDashboard.putNumber("Max Speed", 0.7);
-		SmartDashboard.putNumber("Speed Climb Back", 0);
-		SmartDashboard.putNumber("Speed Climb Forward", 0);
 		SmartDashboard.putNumber("kP", 0.11); //0.11
 		SmartDashboard.putNumber("kPD", 0.15);
 		// sensors
@@ -165,8 +164,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("In Scale", cubeSystem.getScaleSensor());
 		SmartDashboard.putBoolean("In Floor", cubeSystem.getFloorSensor());
 		SmartDashboard.putBoolean("In Switch", cubeSystem.getSwitchSensor());
-
-		SmartDashboard.putData("Teleop Gyro PID", driver.getGyroController());
 		SmartDashboard.putBoolean("Use Gyro", false);
 		SmartDashboard.putBoolean("Allow Pre End Game Platforms", true);
 		SmartDashboard.putBoolean("sol 1", false);
@@ -174,9 +171,10 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("sol 3", false);
 		SmartDashboard.putBoolean("sol 4", false);
 		SmartDashboard.putData("Encoder PID", driver.getEncoderController());
-		SmartDashboard.putData("Gyro PID", driver.getGyroController());
+//		SmartDashboard.putData("Gyro PID", driver.getGyroController());
 		SmartDashboard.putNumber("Speed climb left", 1);
 		SmartDashboard.putNumber("Speed climb right", 1);
+		SmartDashboard.putNumber("Ultrasonic value", RobotMap.ultrasonic.getValue());
 	}
 
 	public void SmartDashBoardPereodic() {
@@ -186,6 +184,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Encoder Value", driver.getEncoderValue());
 		SmartDashboard.putNumber("Encoder Rate", driver.getSpeedEncoder());
 		SmartDashboard.putNumber("elevator current", RobotMap.elevatorsMotor.getOutputCurrent());
+		SmartDashboard.putNumber("Ultrasonic value", RobotMap.ultrasonic.getValue());
 		
 		SmartDashboard.putBoolean("In Scale", cubeSystem.getScaleSensor());
 		SmartDashboard.putBoolean("In Floor", cubeSystem.getFloorSensor());

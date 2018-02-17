@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoUpOpen extends CommandGroup {
 
     public AutoUpOpen() {
-    	addParallel(new LiftByTime(1.5, true)); //Lifts down the ele
-    	addSequential(new CatchCube()); //Closes the claws
+    	addParallel(new LiftToSwitch()); //Lifts to switch at begin
+    	addSequential(new CatchCube()); //Opens the claws
     }
 }

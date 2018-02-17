@@ -27,7 +27,7 @@ public class AutoDrive extends Command {
     	driver.encoderController.enable();
     	driver.setGyroControllerSetPoint(0);
     	driver.gyroController.enable();
-    	setTimeout(15);
+    	setTimeout(2);
     	kP = SmartDashboard.getNumber("kPD", 0);
     	System.out.println(kP);
     }

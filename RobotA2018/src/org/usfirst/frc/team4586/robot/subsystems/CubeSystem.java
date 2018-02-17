@@ -106,6 +106,8 @@ public class CubeSystem extends Subsystem {
     }
 
     public boolean getSwitchSensor() {
+    if (!switchSensor.get())
+    	System.out.println("Switch Sensor");
 	return !switchSensor.get();
     }
 

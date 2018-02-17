@@ -4,6 +4,7 @@ import org.usfirst.frc.team4586.robot.Robot;
 import org.usfirst.frc.team4586.robot.subsystems.CubeSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -31,7 +32,7 @@ public class CatchCube extends Command {
 			this.cubeSystem.setPistonL(false);
 			System.out.println("Close Right");
 		}
-		setTimeout(0.2);
+		setTimeout(SmartDashboard.getNumber("Delay Hands", 0));
 	}
 
 	// Called repeatedly when this Command is scheduled to run
