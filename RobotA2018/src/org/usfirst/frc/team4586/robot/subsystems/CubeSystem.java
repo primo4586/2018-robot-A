@@ -53,7 +53,7 @@ public class CubeSystem extends Subsystem {
 
     // checks if the platforms' pistons are opened
     public boolean isOpened() {
-	return (this.isCubeCatcherOpen);
+	return this.solenoid1.get();
     }
     
     public void setIsCubeCatcherOpen(boolean value)

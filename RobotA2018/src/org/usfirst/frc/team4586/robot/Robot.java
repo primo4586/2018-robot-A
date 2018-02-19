@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team4586.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -15,12 +17,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4586.robot.commands.ArcadeDrive;
 import org.usfirst.frc.team4586.robot.commands.AutoDrive;
-import org.usfirst.frc.team4586.robot.commands.AutoPickCubeMid;
+import org.usfirst.frc.team4586.robot.commands.AutoMid;
+import org.usfirst.frc.team4586.robot.commands.AutoOnlyDriveByTime;
+import org.usfirst.frc.team4586.robot.commands.AutoSideSwitchLeft;
+import org.usfirst.frc.team4586.robot.commands.AutoSideSwitchRight;
 import org.usfirst.frc.team4586.robot.commands.LiftCubeByJoystick;
 import org.usfirst.frc.team4586.robot.subsystems.Climber;
 import org.usfirst.frc.team4586.robot.subsystems.CubeSystem;
 import org.usfirst.frc.team4586.robot.subsystems.Driver;
-import org.usfirst.frc.team4586.robot.subsystems.ExampleSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,14 +34,14 @@ import org.usfirst.frc.team4586.robot.subsystems.ExampleSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
 	public static OI m_oi;
 	public static Climber climber;
 	public static CubeSystem cubeSystem;
 	public static Driver driver;
 	Command m_autonomousCommand;
 	SendableChooser<Integer> m_chooser = new SendableChooser<>();
-//	int i = 0;
+
+	// int i = 0;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -45,21 +49,24 @@ public class Robot extends TimedRobot {
 	// @Override
 	public void robotInit() {
 		RobotMap.Init();
-		climber = new Climber(RobotMap.climbMotor1, RobotMap.climbMotor2, RobotMap.compressor,
-				RobotMap.openPlatfrom, RobotMap.closePlatfrom);
+		climber = new Climber(RobotMap.climbMotor1, RobotMap.climbMotor2, RobotMap.compressor, RobotMap.openPlatfrom,
+				RobotMap.closePlatfrom);
 
 		cubeSystem = new CubeSystem(RobotMap.solenoidCube2, RobotMap.solenoidCube1, RobotMap.pushCubeOpen,
-				RobotMap.pushCubeClose, RobotMap.compressor, RobotMap.elevatorsMotor, RobotMap.scaleSensor, 
+				RobotMap.pushCubeClose, RobotMap.compressor, RobotMap.elevatorsMotor, RobotMap.scaleSensor,
 				RobotMap.switchSensor, RobotMap.floorSensor);
 		driver = new Driver(RobotMap.leftFrontMotor, RobotMap.leftBackMotor, RobotMap.rightFrontMotor,
 				RobotMap.rightBackMotor, RobotMap.gyro, RobotMap.drivingEncoder);
 		m_oi = new OI();
-		m_chooser.addDefault("Auto drive straight", 0);
-		// chooser.addObject("Auto Right Side", new AutoCommandGroupRight());
-		// chooser.addObject("AutoMiddle", new AutoCommandGroupMiddle());
+		m_chooser.addDefault("Auto Drive Only Straight", 0);
 		m_chooser.addObject("Auto Middle Pickup", 1);
+		m_chooser.addObject("Auto Left Switch", 1);
+		m_chooser.addObject("Auto Right Switch", 1);
+		m_chooser.addObject("Auto Drive Time", 1);
 		SmartDashBoardRobotInit();
 		SmartDashboard.putData("Auto mode", m_chooser);
+		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+		camera.setResolution(1280, 720);
 	}
 
 	/**
@@ -76,7 +83,6 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 	}
-
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
 	 * between different autonomous modes using the dashboard. The sendable
@@ -92,13 +98,14 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		if (m_chooser.getSelected() == 0) {
-			m_autonomousCommand = new AutoDrive(450);
+			m_autonomousCommand = new AutoOnlyDriveByTime();
 		} else if (m_chooser.getSelected() == 1) {
-			m_autonomousCommand = new AutoPickCubeMid();
+			m_autonomousCommand = new AutoMid();
+		} else if (m_chooser.getSelected() == 2) {
+			m_autonomousCommand = new AutoSideSwitchLeft();
+		} else if (m_chooser.getSelected() == 3) {
+			m_autonomousCommand = new AutoSideSwitchRight();
 		}
-		
-		
-		
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
@@ -128,7 +135,6 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().add(new LiftCubeByJoystick());
 
 	}
-
 	/**
 	 * This function is called periodically during operator control.
 	 */
@@ -136,7 +142,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SmartDashBoardPereodic();
-//		SmartDashboard.putNumber("periodic", ++i);
+		// SmartDashboard.putNumber("periodic", ++i);
 	}
 
 	/**
@@ -149,18 +155,20 @@ public class Robot extends TimedRobot {
 	public void SmartDashBoardRobotInit() {
 
 		SmartDashboard.putNumber("Elevator Speed", 1);
-		SmartDashboard.putNumber("Delay Hands", 0.0);
+		SmartDashboard.putNumber("Delay Hands", 0.1);
 		SmartDashboard.putNumber("Driving Direction", -1);
 		SmartDashboard.putNumber("Max Speed", 0.7);
-		SmartDashboard.putNumber("kP", 0.11); //0.11
+		SmartDashboard.putNumber("kP", 0.11); // 0.11
 		SmartDashboard.putNumber("kPD", 0.15);
+		SmartDashboard.putNumber("Auto Direction", 1);
+		SmartDashboard.putNumber("Auto Time Straight", 5);
 		// sensors
 		SmartDashboard.putNumber("Gyro Angle", driver.getGyroAngle());
 		// TODO: check if the values are corrected
 		SmartDashboard.putNumber("Encoder Distance", driver.getSpeedEncoder());
 		SmartDashboard.putNumber("Encoder Value", driver.getEncoderValue());
 		SmartDashboard.putNumber("Encoder Rate", driver.getSpeedEncoder());
-		SmartDashboard.putNumber("kD", 0.13); //0.13
+		SmartDashboard.putNumber("kD", 0.13); // 0.13
 		SmartDashboard.putBoolean("In Scale", cubeSystem.getScaleSensor());
 		SmartDashboard.putBoolean("In Floor", cubeSystem.getFloorSensor());
 		SmartDashboard.putBoolean("In Switch", cubeSystem.getSwitchSensor());
@@ -171,7 +179,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("sol 3", false);
 		SmartDashboard.putBoolean("sol 4", false);
 		SmartDashboard.putData("Encoder PID", driver.getEncoderController());
-//		SmartDashboard.putData("Gyro PID", driver.getGyroController());
+		// SmartDashboard.putData("Gyro PID", driver.getGyroController());
 		SmartDashboard.putNumber("Speed climb left", 1);
 		SmartDashboard.putNumber("Speed climb right", 1);
 		SmartDashboard.putNumber("Ultrasonic value", RobotMap.ultrasonic.getValue());
@@ -185,18 +193,12 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Encoder Rate", driver.getSpeedEncoder());
 		SmartDashboard.putNumber("elevator current", RobotMap.elevatorsMotor.getOutputCurrent());
 		SmartDashboard.putNumber("Ultrasonic value", RobotMap.ultrasonic.getValue());
-		
+
 		SmartDashboard.putBoolean("In Scale", cubeSystem.getScaleSensor());
 		SmartDashboard.putBoolean("In Floor", cubeSystem.getFloorSensor());
 		SmartDashboard.putBoolean("In Switch", cubeSystem.getSwitchSensor());
-		
-//		if (RobotMap.compressor.enabled() && !SmartDashboard.getBoolean("Compressor", false)) {
-//			RobotMap.compressor.stop();
-//		} else if (SmartDashboard.getBoolean("Compressor", false)) {
-//			RobotMap.compressor.setClosedLoopControl(true);
-//		}
-		
+
 		SmartDashboard.putBoolean("Compressor Pressure Switch", RobotMap.compressor.getPressureSwitchValue());
-		
+
 	}
 }

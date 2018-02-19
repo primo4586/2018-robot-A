@@ -31,7 +31,7 @@ public class OpenPlatforms extends Command {
 	protected void execute() {
 		System.out.println("about to "+toOpen);
 		if (Timer.getMatchTime() < 32 || SmartDashboard.getBoolean("Allow Pre End Game Platforms", false)) {
-			climber.setPlatform(toOpen);
+			climber.setPlatform(!climber.isOpened());
 			System.out.println("Just opened "+toOpen);
 		}
 	}

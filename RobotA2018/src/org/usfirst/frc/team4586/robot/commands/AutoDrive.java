@@ -11,6 +11,7 @@ public class AutoDrive extends Command {
 	private Driver driver;
 	private double setPoint;
 	double kP;
+	double directionMultiplier;
 	
     public AutoDrive(double setPoint) {
         // Use requires() here to declare subsystem dependencies
@@ -21,22 +22,21 @@ public class AutoDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	directionMultiplier = SmartDashboard.getNumber("Auto Direction", 1);
     	driver.resetEncoder();
     	driver.resetGyro();
-    	driver.setEncoderControllerSetPoint(setPoint);
+    	driver.setEncoderControllerSetPoint(setPoint*directionMultiplier);
     	driver.encoderController.enable();
     	driver.setGyroControllerSetPoint(0);
     	driver.gyroController.enable();
     	setTimeout(2);
     	kP = SmartDashboard.getNumber("kPD", 0);
-    	System.out.println(kP);
     }
 
-    
     protected void execute() {
     	double error = 0 - driver.getGyro();
     	double prcw = kP * error; //aka loyshamen
-    	driver.arcadeDrive(driver.getPIDspeed() * 0.75, prcw);
+    	driver.arcadeDrive(driver.getPIDspeed() * 0.75 * directionMultiplier, prcw);
     }
 
 

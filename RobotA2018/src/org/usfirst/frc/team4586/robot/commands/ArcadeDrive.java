@@ -19,9 +19,6 @@ public class ArcadeDrive extends Command {
 	public ArcadeDrive() {
 		this.driver = Robot.driver;
 		this.oi = Robot.m_oi;
-
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
 	}
 
 	// Called just before this Command runs the first time

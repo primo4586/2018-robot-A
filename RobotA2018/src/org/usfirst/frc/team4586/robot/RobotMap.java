@@ -61,7 +61,7 @@ public class RobotMap {
 		rightBackMotor.setSafetyEnabled(false);
 		climbMotor1 = new WPI_TalonSRX(5);
 		climbMotor1.setSafetyEnabled(false);
-		climbMotor2 = new WPI_TalonSRX(2);
+		climbMotor2 = new WPI_TalonSRX(4);
 		climbMotor2.setSafetyEnabled(false);
 		elevatorsMotor = new WPI_TalonSRX(3);
 		elevatorsMotor.setSafetyEnabled(false);

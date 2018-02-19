@@ -13,7 +13,7 @@ public class AutoDriveTime extends Command {
 
 	private Driver driver;
 	private double time;
-	
+	private double directionMultiplier;
     public AutoDriveTime(double _time) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -27,12 +27,13 @@ public class AutoDriveTime extends Command {
 		driver.setSetPointGyro(0);
 		driver.enableGyro();
 		setTimeout(this.time);
+		directionMultiplier = SmartDashboard.getNumber("Auto Direction", 1);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 		driver.getGyroController().setPID(0, 0, 0);
-		driver.arcadeDrive(-SmartDashboard.getNumber("Max speed", 0.7), 0);
+		driver.arcadeDrive(SmartDashboard.getNumber("Max speed", 0.7)*directionMultiplier, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -42,10 +43,12 @@ public class AutoDriveTime extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	driver.stopAllWheels();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	driver.stopAllWheels();
     }
 }
