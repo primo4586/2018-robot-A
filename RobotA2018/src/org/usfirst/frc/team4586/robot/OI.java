@@ -18,9 +18,11 @@ import org.usfirst.frc.team4586.robot.commands.Invert;
 import org.usfirst.frc.team4586.robot.commands.LiftToFloor;
 import org.usfirst.frc.team4586.robot.commands.LiftToSwitch;
 import org.usfirst.frc.team4586.robot.commands.OpenPlatforms;
+import org.usfirst.frc.team4586.robot.commands.OpendShloplop;
 import org.usfirst.frc.team4586.robot.commands.ResetEncoder;
 import org.usfirst.frc.team4586.robot.commands.StopAllMotors;
 import org.usfirst.frc.team4586.robot.commands.SwitchCompressor;
+import org.usfirst.frc.team4586.robot.commands.UnlockElevator;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -53,6 +55,8 @@ public class OI {
 	public JoystickButton openPlatform;
 	public JoystickButton switchCompressor;
 	public JoystickButton downRight;
+	public JoystickButton toggleShloplop;
+	public JoystickButton unlockElevator;
 	
 	public OI()
 	{
@@ -67,13 +71,15 @@ public class OI {
 		
 		
 		joystickOpertor = new Joystick(1);
-		liftToFloor = new JoystickButton(joystickOpertor , 4);
-		liftToSwitch = new JoystickButton(joystickOpertor ,6);
-		climbR = new JoystickButton(joystickOpertor , 5);
+		liftToFloor = new JoystickButton(joystickOpertor , 3);
+		liftToSwitch = new JoystickButton(joystickOpertor ,5);
+		climbR = new JoystickButton(joystickOpertor , 6);
 		openPlatform = new JoystickButton(joystickOpertor , 2);
 		switchCompressor = new JoystickButton(joystickOpertor, 7);
 		calibrateGyro = new JoystickButton(joystickOpertor , 8);
-		downRight = new JoystickButton(joystickOpertor, 3);
+		downRight = new JoystickButton(joystickOpertor, 4);
+		toggleShloplop = new JoystickButton(joystickOpertor, 1);
+		unlockElevator = new JoystickButton(joystickOpertor, 10);
 		
 		//driver commands
 		stopAllMotors.whenPressed(new StopAllMotors());
@@ -91,5 +97,7 @@ public class OI {
 		openPlatform.whenPressed(new OpenPlatforms());
 		switchCompressor.whenPressed(new SwitchCompressor());
 		downRight.whileHeld(new DownRight());
+		toggleShloplop.whenPressed(new OpendShloplop());
+		unlockElevator.whenPressed(new UnlockElevator());
 	}
 }

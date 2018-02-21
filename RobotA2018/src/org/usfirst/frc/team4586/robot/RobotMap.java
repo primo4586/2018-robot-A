@@ -48,6 +48,9 @@ public class RobotMap {
 	public static Compressor compressor;
 	public static Solenoid solenoidCube1;
 	public static Solenoid solenoidCube2;
+	public static Solenoid openShloplopSolenoid;
+	public static Solenoid closeShloplopSolenoid; //Shloplop = Somthing for climbing or whatever
+	
 
 	public static void Init() {
 		// TODO Check connections
@@ -74,16 +77,20 @@ public class RobotMap {
 		solenoidCube2.set(false);
 		pushCubeOpen = new Solenoid(4); //ID'S ARE 4 AND 5  - DOUBLE SOLENOID
 		pushCubeClose = new Solenoid(5);
-		openPlatfrom = new Solenoid(2); // ID'S ARE 2 AND 3  - DOUBLE SOLENOID
+		openPlatfrom = new Solenoid(1, 4); // ID'S ARE 2 AND 3  - DOUBLE SOLENOID
 		openPlatfrom.set(false);
-		closePlatfrom = new Solenoid(3);
+		closePlatfrom = new Solenoid(1,5);
 		closePlatfrom.set(true);
+		openShloplopSolenoid = new Solenoid(1,6);
+		openShloplopSolenoid.set(false);
+		closeShloplopSolenoid = new Solenoid(1,7);
+		closeShloplopSolenoid.set(true);
 		
 		gyro = new AnalogGyro(0);
 		drivingEncoder = new Encoder(9, 8);
 		scaleSensor = new DigitalInput(2);
-		switchSensor = new DigitalInput(0);
-		floorSensor = new DigitalInput(1);
+		switchSensor = new DigitalInput(1);
+		floorSensor = new DigitalInput(0);
 		ultrasonic = new AnalogInput(3);
 	}
 

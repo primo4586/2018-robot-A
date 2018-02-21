@@ -9,6 +9,7 @@ package org.usfirst.frc.team4586.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -50,7 +51,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		RobotMap.Init();
 		climber = new Climber(RobotMap.climbMotor1, RobotMap.climbMotor2, RobotMap.compressor, RobotMap.openPlatfrom,
-				RobotMap.closePlatfrom);
+				RobotMap.closePlatfrom , RobotMap.openShloplopSolenoid , RobotMap.closeShloplopSolenoid);
 
 		cubeSystem = new CubeSystem(RobotMap.solenoidCube2, RobotMap.solenoidCube1, RobotMap.pushCubeOpen,
 				RobotMap.pushCubeClose, RobotMap.compressor, RobotMap.elevatorsMotor, RobotMap.scaleSensor,
@@ -58,11 +59,16 @@ public class Robot extends TimedRobot {
 		driver = new Driver(RobotMap.leftFrontMotor, RobotMap.leftBackMotor, RobotMap.rightFrontMotor,
 				RobotMap.rightBackMotor, RobotMap.gyro, RobotMap.drivingEncoder);
 		m_oi = new OI();
+		this.cubeSystem.setCanUseElevator(true);
+		this.cubeSystem.setCubePusher(true);
+		this.cubeSystem.setPistonL(false);
+		this.cubeSystem.setPistonR(false);
+		this.climber.setShloplop(false);
+		this.climber.setPlatform(true);
 		m_chooser.addDefault("Auto Drive Only Straight", 0);
 		m_chooser.addObject("Auto Middle Pickup", 1);
-		m_chooser.addObject("Auto Left Switch", 1);
-		m_chooser.addObject("Auto Right Switch", 1);
-		m_chooser.addObject("Auto Drive Time", 1);
+		m_chooser.addObject("Auto Left Switch", 2);
+		m_chooser.addObject("Auto Right Switch", 3);
 		SmartDashBoardRobotInit();
 		SmartDashboard.putData("Auto mode", m_chooser);
 		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
@@ -97,6 +103,12 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		this.cubeSystem.setCanUseElevator(true);
+		this.cubeSystem.setCubePusher(true);
+		this.cubeSystem.setPistonL(false);
+		this.cubeSystem.setPistonR(false);
+		this.climber.setShloplop(false);
+		this.climber.setPlatform(true);
 		if (m_chooser.getSelected() == 0) {
 			m_autonomousCommand = new AutoOnlyDriveByTime();
 		} else if (m_chooser.getSelected() == 1) {
@@ -131,9 +143,14 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand.cancel();
 		}
 		System.out.println("init");
+		this.cubeSystem.setCanUseElevator(true);
+		this.cubeSystem.setCubePusher(true);
+		this.cubeSystem.setPistonL(false);
+		this.cubeSystem.setPistonR(false);
+		this.climber.setShloplop(false);
+		this.climber.setPlatform(true);
 		Scheduler.getInstance().add(new ArcadeDrive());
 		Scheduler.getInstance().add(new LiftCubeByJoystick());
-
 	}
 	/**
 	 * This function is called periodically during operator control.
@@ -192,6 +209,12 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Encoder Value", driver.getEncoderValue());
 		SmartDashboard.putNumber("Encoder Rate", driver.getSpeedEncoder());
 		SmartDashboard.putNumber("elevator current", RobotMap.elevatorsMotor.getOutputCurrent());
+		SmartDashboard.putNumber("Left front current", RobotMap.leftFrontMotor.getOutputCurrent());
+		SmartDashboard.putNumber("Left back current", RobotMap.leftBackMotor.getOutputCurrent());
+		SmartDashboard.putNumber("Right front current", RobotMap.rightFrontMotor.getOutputCurrent());
+		SmartDashboard.putNumber("Right back current", RobotMap.rightBackMotor.getOutputCurrent());
+		SmartDashboard.putNumber("climb 1 current", RobotMap.climbMotor1.getOutputCurrent());
+		SmartDashboard.putNumber("climb 2 current", RobotMap.climbMotor2.getOutputCurrent());
 		SmartDashboard.putNumber("Ultrasonic value", RobotMap.ultrasonic.getValue());
 
 		SmartDashboard.putBoolean("In Scale", cubeSystem.getScaleSensor());
@@ -199,6 +222,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("In Switch", cubeSystem.getSwitchSensor());
 
 		SmartDashboard.putBoolean("Compressor Pressure Switch", RobotMap.compressor.getPressureSwitchValue());
-
+		
+		SmartDashboard.putNumber("elevator speed", RobotMap.elevatorsMotor.get());
 	}
 }

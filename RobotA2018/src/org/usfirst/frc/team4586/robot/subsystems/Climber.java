@@ -15,15 +15,21 @@ public class Climber extends Subsystem {
 	WPI_TalonSRX climbMotor2;
 	Solenoid openPlatform;
 	Solenoid closePlatform;
+	Solenoid openShloplopSolenoid;
+	Solenoid closeShloplopSolenoid;
 	boolean isOpen;
+	boolean toOpenShloplop;
 
-	public Climber(WPI_TalonSRX climbMotor1, WPI_TalonSRX climbMotor2, Compressor compressor, Solenoid openPlatform, Solenoid closePlatform) {
+	public Climber(WPI_TalonSRX climbMotor1, WPI_TalonSRX climbMotor2, Compressor compressor, Solenoid openPlatform, Solenoid closePlatform ,Solenoid openShloplopSolenoid ,Solenoid closeShloplopSolenoid) {
 		this.isOpen = false;
 		this.climbMotor1 = climbMotor1;
 		this.climbMotor2 = climbMotor2;
 		this.compressor = compressor;
 		this.openPlatform = openPlatform;
 		this.closePlatform = closePlatform;
+		this.openShloplopSolenoid=openShloplopSolenoid;
+		this.closeShloplopSolenoid=closeShloplopSolenoid;
+		
 	}
 
     // checks if the platforms' pistons are opened
@@ -66,4 +72,15 @@ public class Climber extends Subsystem {
 	// Set the default command for a subsystem here.
 	// setDefaultCommand(new MySpecialCommand());
     }
+    public void setShloplop(boolean toOpenShloplop)
+    {
+    	this.openShloplopSolenoid.set(toOpenShloplop);
+    	this.closeShloplopSolenoid.set(!toOpenShloplop);
+    }
+    public boolean isOpendShloplop()
+    {
+    	return openShloplopSolenoid.get();
+    }
+    
+    
 }

@@ -29,9 +29,15 @@ public class LiftCubeByJoystick extends Command {
 		this.speed = this.oi.joystickOpertor.getRawAxis(1) * SmartDashboard.getNumber("Elevator Speed", 1.0);
 		if ((cubeSystem.getScaleSensor() && speed > 0) || (cubeSystem.getFloorSensor() && speed < 0)||(Math.abs(speed)<0.1)) {
 			this.speed = 0;
+			//System.out.println(this.speed + " Elevator");
+			this.cubeSystem.setSpeedElevators(0);
 		}
-		//System.out.println(this.speed + " Elevator");
-		this.cubeSystem.setSpeedElevators(this.speed);
+		else
+		{
+			//System.out.println(this.speed + " Elevator");
+			this.cubeSystem.setSpeedElevators(this.speed + 0.2 * (this.speed / Math.abs(this.speed)));
+		}
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
