@@ -19,7 +19,6 @@ public class AutoMid extends CommandGroup {
 			addSequential(new AutoDrive(170)); // 235
 			addSequential(new AutoTurn(55)); // 60
 			addSequential(new AutoDrive(85)); // 110
-			// addSequential(new Wait(0.5));
 			addSequential(new CatchCube()); // Closes the claws
 
 		} else {

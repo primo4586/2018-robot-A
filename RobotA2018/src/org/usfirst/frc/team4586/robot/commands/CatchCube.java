@@ -32,7 +32,7 @@ public class CatchCube extends Command {
 			this.cubeSystem.setPistonL(false);
 			System.out.println("Close Right");
 		}
-		setTimeout(0);
+		setTimeout(SmartDashboard.getNumber("Delay Hands", 0.1));
 	}
 
 	// Called repeatedly when this Command is scheduled to run

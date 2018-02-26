@@ -1,5 +1,4 @@
 package org.usfirst.frc.team4586.robot.commands;
-
 import org.usfirst.frc.team4586.robot.Robot;
 import org.usfirst.frc.team4586.robot.subsystems.Climber;
 import org.usfirst.frc.team4586.robot.subsystems.CubeSystem;
