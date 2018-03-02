@@ -101,7 +101,7 @@ public class OI {
 				openPlatform.whenPressed(new OpenPlatforms());
 				switchCompressor.whenPressed(new SwitchCompressor());
 				downRight.whileHeld(new DownRight());
-				//toggleShloplop.whenPressed(new OpendShloplop());
+				toggleShloplop.whenPressed(new OpendShloplop());
 				unlockElevator.whenPressed(new UnlockElevator());
 		
 	}
