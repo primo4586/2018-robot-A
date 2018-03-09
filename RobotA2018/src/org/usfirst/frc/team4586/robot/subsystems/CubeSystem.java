@@ -43,15 +43,13 @@ public class CubeSystem extends Subsystem {
 
 	// checks if the pusher piston is opened
 	public boolean isOpenedPusher() {
-		System.out.println("push " + pushCubeOpen.get());
 		return pushCubeOpen.get();
 	}
 
 	public void setCubePusher(boolean isOpenedPusher) {
-		System.out.println("pusher turn to " + isOpenedPusher);
 		pushCubeOpen.set(isOpenedPusher);
 		pushCubeClose.set(!isOpenedPusher);
-		System.out.println("pusher is " + pushCubeOpen.get());
+
 	}
 
 	// checks if the platforms' pistons are opened
@@ -82,15 +80,10 @@ public class CubeSystem extends Subsystem {
 
 	public void setPistonR(boolean toOpen) {
 		solenoid1.set(toOpen);
-		System.out.println("set 1 to " + toOpen);
-		System.out.println("1 " + this.solenoid1.get());
 	}
 
 	public void setPistonL(boolean toOpen) {
 		solenoid2.set(toOpen);
-
-		System.out.println("set 2 to " + toOpen);
-		System.out.println("2 " + this.solenoid2.get());
 	}
 
 	// elevator's speed
@@ -117,8 +110,6 @@ public class CubeSystem extends Subsystem {
 	}
 
 	public boolean getSwitchSensor() {
-		if (!switchSensor.get())
-			System.out.println("Switch Sensor");
 		return !switchSensor.get();
 	}
 

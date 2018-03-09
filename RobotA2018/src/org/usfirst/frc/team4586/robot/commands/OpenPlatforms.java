@@ -24,15 +24,12 @@ public class OpenPlatforms extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		toOpen = !toOpen;
-		System.out.println("loy");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		System.out.println("about to "+toOpen);
 		if (Timer.getMatchTime() < 32 || SmartDashboard.getBoolean("Allow Pre End Game Platforms", false)) {
 			climber.setPlatform(!climber.isOpened());
-			System.out.println("Just opened "+toOpen);
 		}
 	}
 

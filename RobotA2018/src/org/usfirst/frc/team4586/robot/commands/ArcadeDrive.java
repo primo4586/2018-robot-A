@@ -31,20 +31,18 @@ public class ArcadeDrive extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (SmartDashboard.getBoolean("use gyro", false)) {
-			drivingWithGyro();
-		} else {
+//		if (SmartDashboard.getBoolean("use gyro", false)) {
+//			drivingWithGyro();
+//		} else {
 			drivingWithOutGyro();
-		}
+//		}
 	}
 
 	private void drivingWithOutGyro() {
 		// System.out.println(SmartDashboard.getKeys());
-		this.speed = SmartDashboard.getNumber("Driving Direction", 1)
-				* ((this.oi.joystickDriver.getRawAxis(1) * ((SmartDashboard.getNumber("Max speed", 0.7))
+		this.speed = -((this.oi.joystickDriver.getRawAxis(1) * ((SmartDashboard.getNumber("Max speed", 0.7))
 						+ (oi.joystickDriver.getRawAxis(3) * 0.3 - oi.joystickDriver.getRawAxis(2) * 0.2))));
-		this.rotation = (this.oi.joystickDriver.getRawAxis(4)) * (SmartDashboard.getNumber("Max Rotation Speed", 0.5)
-				+ (oi.joystickDriver.getRawAxis(3) * 0.3 - oi.joystickDriver.getRawAxis(2) * 0.3));
+		this.rotation = (this.oi.joystickDriver.getRawAxis(4) * 0.75);
 		if (Math.abs(speed) < 0.2) {
 			speed = 0;
 		}
@@ -56,11 +54,11 @@ public class ArcadeDrive extends Command {
 	}
 
 	private void drivingWithGyro() {
-		this.speed = SmartDashboard.getNumber("Driving direction", 1)
+		this.speed = 1
 				* ((this.oi.joystickDriver.getRawAxis(1) * (SmartDashboard.getNumber("Max speed", 0))
 						+ ((this.oi.joystickDriver.getRawAxis(1)) / Math.abs(this.oi.joystickDriver.getRawAxis(1)))
 								* (oi.joystickDriver.getRawAxis(3) * 0.3 - oi.joystickDriver.getRawAxis(2) * 0.3)));
-		this.rotation = SmartDashboard.getNumber("Driving direction", 1) * (this.oi.joystickDriver.getRawAxis(4));
+		this.rotation = 1 * (this.oi.joystickDriver.getRawAxis(4));
 		if (Math.abs(speed) < 0.2) {
 			speed = 0;
 		}

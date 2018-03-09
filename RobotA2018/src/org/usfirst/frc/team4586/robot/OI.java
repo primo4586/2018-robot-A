@@ -8,6 +8,7 @@
 package org.usfirst.frc.team4586.robot;
 
 import org.usfirst.frc.team4586.robot.commands.AutoDrive;
+import org.usfirst.frc.team4586.robot.commands.AutoStart;
 import org.usfirst.frc.team4586.robot.commands.AutoTurn;
 import org.usfirst.frc.team4586.robot.commands.CalibrateGyro;
 import org.usfirst.frc.team4586.robot.commands.CatchCube;
@@ -45,6 +46,7 @@ public class OI {
 	public JoystickButton resetEncoder;
 	public JoystickButton cubePusher;
 	public JoystickButton noDelayCatch;
+	public JoystickButton gyroTurn;
 	public JoystickButton openBothThings;
 	
 	//operator
@@ -75,14 +77,15 @@ public class OI {
 				
 				joystickOpertor = new Joystick(1);
 				liftToFloor = new JoystickButton(joystickOpertor , 3);
-				liftToSwitch = new JoystickButton(joystickOpertor ,5);
+				//liftToSwitch = new JoystickButton(joystickOpertor ,7);
 				climbR = new JoystickButton(joystickOpertor , 6);
 				openPlatform = new JoystickButton(joystickOpertor , 2);
-				switchCompressor = new JoystickButton(joystickOpertor, 7);
+				switchCompressor = new JoystickButton(joystickOpertor, 5);
 				calibrateGyro = new JoystickButton(joystickOpertor , 8);
 				downRight = new JoystickButton(joystickOpertor, 4);
 				toggleShloplop = new JoystickButton(joystickOpertor, 1);
 				unlockElevator = new JoystickButton(joystickOpertor, 10);
+				gyroTurn = new JoystickButton(joystickOpertor, 7);
 				
 				//driver commands
 				stopAllMotors.whenPressed(new StopAllMotors());
@@ -96,13 +99,14 @@ public class OI {
 				
 				//operator commands
 				liftToFloor.toggleWhenPressed(new LiftToFloor());
-				liftToSwitch.toggleWhenPressed(new LiftToSwitch());
+				gyroTurn.toggleWhenPressed(new AutoTurn(90));
+				//liftToSwitch.toggleWhenPressed(new LiftToSwitch());
 				climbR.whileHeld(new ClimbRight());
 				openPlatform.whenPressed(new OpenPlatforms());
 				switchCompressor.whenPressed(new SwitchCompressor());
 				downRight.whileHeld(new DownRight());
 				toggleShloplop.whenPressed(new OpendShloplop());
-				unlockElevator.whenPressed(new UnlockElevator());
+//				unlockElevator.whenPressed(new AutoStart());
 		
 	}
 }

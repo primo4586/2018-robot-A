@@ -30,8 +30,8 @@ public class AutoTurn extends Command {
     	driver.setGyroControllerSetPoint(setPoint);
     	driver.gyroController.enable();
     	driver.resetGyro();
-    	kP = SmartDashboard.getNumber("kP", 0);
-    	kD = SmartDashboard.getNumber("kD", 0);
+    	kP = 0.11;
+    	kD = 0.13;
     	prevError = 0;
     }
 
@@ -55,7 +55,6 @@ public class AutoTurn extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-		System.out.println("Turned: " + SmartDashboard.getNumber("Gyro Value",0));
     	driver.gyroController.disable();
     	driver.arcadeDrive(0, 0);
     	System.out.println(setPoint);
@@ -64,7 +63,6 @@ public class AutoTurn extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-		System.out.println("Turned: " + SmartDashboard.getNumber("Gyro Value",0));
     	driver.gyroController.disable();
     	driver.arcadeDrive(0, 0);
     }

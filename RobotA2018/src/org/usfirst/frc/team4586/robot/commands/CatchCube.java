@@ -26,13 +26,11 @@ public class CatchCube extends Command {
 		isToOpen = cubeSystem.isOpened();
 		if (!isToOpen) {
 			this.cubeSystem.setPistonR(true);
-			System.out.println("Open Left");
 
 		} else {
 			this.cubeSystem.setPistonL(false);
-			System.out.println("Close Right");
 		}
-		setTimeout(SmartDashboard.getNumber("Delay Hands", 0.1));
+		setTimeout(0.1);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -40,10 +38,8 @@ public class CatchCube extends Command {
 		if (isTimedOut()) {
 			if (!isToOpen) {
 				this.cubeSystem.setPistonL(true);
-				System.out.println("Open Right");
 			} else {
 				this.cubeSystem.setPistonR(false);
-				System.out.println("Close Left");
 			}
 			this.isOpenedBothPistons = true;
 		}
@@ -57,7 +53,6 @@ public class CatchCube extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		this.cubeSystem.setIsCubeCatcherOpen(!isToOpen);
-		System.out.println("Finished");
 	}
 
 	// Called when another command which requires one or more of the same

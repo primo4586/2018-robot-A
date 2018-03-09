@@ -26,6 +26,7 @@ public class LiftToSwitch extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		setTimeout(4);
 
 	}
 
@@ -38,7 +39,7 @@ public class LiftToSwitch extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return cubeSystem.getSwitchSensor();
+		return cubeSystem.getSwitchSensor()||isTimedOut();
 	}
 
 	// Called once after isFinished returns true

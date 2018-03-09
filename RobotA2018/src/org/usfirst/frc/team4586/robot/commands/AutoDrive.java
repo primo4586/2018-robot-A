@@ -22,7 +22,7 @@ public class AutoDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	directionMultiplier = SmartDashboard.getNumber("Auto Direction", 1);
+    	directionMultiplier = 1;
     	driver.resetEncoder();
     	driver.resetGyro();
     	driver.setEncoderControllerSetPoint(setPoint*directionMultiplier);
@@ -30,7 +30,7 @@ public class AutoDrive extends Command {
     	driver.setGyroControllerSetPoint(0);
     	driver.gyroController.enable();
     	setTimeout(2);
-    	kP = SmartDashboard.getNumber("kPD", 0);
+    	kP = 0.15;
     }
 
     protected void execute() {

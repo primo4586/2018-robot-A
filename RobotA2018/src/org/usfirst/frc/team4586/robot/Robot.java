@@ -9,6 +9,8 @@ package org.usfirst.frc.team4586.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GamepadBase;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -50,6 +52,7 @@ public class Robot extends TimedRobot {
 	// @Override
 	public void robotInit() {
 		RobotMap.Init();
+		RobotMap.gyro.calibrate();
 		climber = new Climber(RobotMap.climbMotor1, RobotMap.climbMotor2, RobotMap.compressor, RobotMap.openPlatfrom,
 				RobotMap.closePlatfrom , RobotMap.openShloplopSolenoid , RobotMap.closeShloplopSolenoid);
 
@@ -72,7 +75,7 @@ public class Robot extends TimedRobot {
 		SmartDashBoardRobotInit();
 		SmartDashboard.putData("Auto mode", m_chooser);
 		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-		camera.setResolution(1280, 720);
+		camera.setResolution(480, 360);
 	}
 
 	/**
@@ -87,20 +90,10 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		
 		Scheduler.getInstance().run();
 	}
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
-	 *
-	 * <p>
-	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
-	 */
+	
 	@Override
 	public void autonomousInit() {
 		this.cubeSystem.setCanUseElevator(true);
@@ -120,6 +113,7 @@ public class Robot extends TimedRobot {
 		}
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
+			System.out.println("game data: " + DriverStation.getInstance().getGameSpecificMessage());
 			m_autonomousCommand.start();
 		}
 	}
@@ -171,58 +165,63 @@ public class Robot extends TimedRobot {
 
 	public void SmartDashBoardRobotInit() {
 
-		SmartDashboard.putNumber("Elevator Speed", 1);
-		SmartDashboard.putNumber("Delay Hands", 0.1);
-		SmartDashboard.putNumber("Driving Direction", -1);
+		SmartDashboard.putNumber("Elevator Speed", 0.7);
+		SmartDashboard.putBoolean("Climbing Motor", false);
+		//SmartDashboard.putNumber("Delay Hands", 0.1);
+		//SmartDashboard.putNumber("Driving Direction", -1);
 		SmartDashboard.putNumber("Max Speed", 0.7);
-		SmartDashboard.putNumber("kP", 0.11); // 0.11
-		SmartDashboard.putNumber("kPD", 0.15);
-		SmartDashboard.putNumber("Auto Direction", 1);
-		SmartDashboard.putNumber("Auto Time Straight", 5);
+		//SmartDashboard.putNumber("kP", 0.11); // 0.11
+		//SmartDashboard.putNumber("kPD", 0.15);
+//		SmartDashboard.putNumber("Auto Direction", 1);
+		SmartDashboard.putNumber("Auto Time Straight", 4);
+//		SmartDashboard.getNumber("Max Rotation Speed", 0.8);
 		// sensors
 		SmartDashboard.putNumber("Gyro Angle", driver.getGyroAngle());
 		// TODO: check if the values are corrected
 		SmartDashboard.putNumber("Encoder Distance", driver.getSpeedEncoder());
-		SmartDashboard.putNumber("Encoder Value", driver.getEncoderValue());
-		SmartDashboard.putNumber("Encoder Rate", driver.getSpeedEncoder());
-		SmartDashboard.putNumber("kD", 0.13); // 0.13
-		SmartDashboard.putBoolean("In Scale", cubeSystem.getScaleSensor());
+		//SmartDashboard.putNumber("Encoder Value", driver.getEncoderValue());
+		//SmartDashboard.putNumber("Encoder Rate", driver.getSpeedEncoder());
+		//SmartDashboard.putNumber("kD", 0.13); // 0.13
+		//SmartDashboard.putBoolean("In Scale", cubeSystem.getScaleSensor());
 		SmartDashboard.putBoolean("In Floor", cubeSystem.getFloorSensor());
 		SmartDashboard.putBoolean("In Switch", cubeSystem.getSwitchSensor());
-		SmartDashboard.putBoolean("Use Gyro", false);
-		SmartDashboard.putBoolean("Allow Pre End Game Platforms", true);
-		SmartDashboard.putBoolean("sol 1", false);
-		SmartDashboard.putBoolean("sol 2", false);
-		SmartDashboard.putBoolean("sol 3", false);
-		SmartDashboard.putBoolean("sol 4", false);
-		SmartDashboard.putData("Encoder PID", driver.getEncoderController());
+		//SmartDashboard.putBoolean("Use Gyro", false);
+		SmartDashboard.putBoolean("Allow Pre End Game Platforms", false);
+//		SmartDashboard.putBoolean("sol 1", false);
+//		SmartDashboard.putBoolean("sol 2", false);
+//		SmartDashboard.putBoolean("sol 3", false);
+//		SmartDashboard.putBoolean("sol 4", false);
+		//SmartDashboard.putData("Encoder PID", driver.getEncoderController());
 		// SmartDashboard.putData("Gyro PID", driver.getGyroController());
-		SmartDashboard.putNumber("Speed climb left", 1);
-		SmartDashboard.putNumber("Speed climb right", 1);
-		SmartDashboard.putNumber("Ultrasonic value", RobotMap.ultrasonic.getValue());
+		//SmartDashboard.putNumber("Speed climb left", 1);
+		//SmartDashboard.putNumber("Speed climb right", 1);
+		//SmartDashboard.putNumber("Ultrasonic value", RobotMap.ultrasonic.getValue());
 	}
 
 	public void SmartDashBoardPereodic() {
+//		SmartDashboard.putNumber("elevator power", RobotMap.elevatorsMotor.get());
+		SmartDashboard.putBoolean("Compressor on",RobotMap.compressor.enabled());
+		//SmartDashboard.putString("game data", DriverStation.getInstance().getGameSpecificMessage());
 		SmartDashboard.putNumber("Gyro Angle", driver.getGyro());
 		// TODO: check if the values are cosrrected
 		SmartDashboard.putNumber("Encoder Distance", driver.getEncoderDistance());
-		SmartDashboard.putNumber("Encoder Value", driver.getEncoderValue());
-		SmartDashboard.putNumber("Encoder Rate", driver.getSpeedEncoder());
+		//SmartDashboard.putNumber("Encoder Value", driver.getEncoderValue());
+		//SmartDashboard.putNumber("Encoder Rate", driver.getSpeedEncoder());
 		SmartDashboard.putNumber("elevator current", RobotMap.elevatorsMotor.getOutputCurrent());
 		SmartDashboard.putNumber("Left front current", RobotMap.leftFrontMotor.getOutputCurrent());
 		SmartDashboard.putNumber("Left back current", RobotMap.leftBackMotor.getOutputCurrent());
 		SmartDashboard.putNumber("Right front current", RobotMap.rightFrontMotor.getOutputCurrent());
 		SmartDashboard.putNumber("Right back current", RobotMap.rightBackMotor.getOutputCurrent());
-		SmartDashboard.putNumber("climb 1 current", RobotMap.climbMotor1.getOutputCurrent());
-		SmartDashboard.putNumber("climb 2 current", RobotMap.climbMotor2.getOutputCurrent());
-		SmartDashboard.putNumber("Ultrasonic value", RobotMap.ultrasonic.getValue());
+		//SmartDashboard.putNumber("climb 1 current", RobotMap.climbMotor1.getOutputCurrent());
+		//SmartDashboard.putNumber("climb 2 current", RobotMap.climbMotor2.getOutputCurrent());
+		//SmartDashboard.putNumber("Ultrasonic value", RobotMap.ultrasonic.getValue());
 
-		SmartDashboard.putBoolean("In Scale", cubeSystem.getScaleSensor());
+		//SmartDashboard.putBoolean("In Scale", cubeSystem.getScaleSensor());
 		SmartDashboard.putBoolean("In Floor", cubeSystem.getFloorSensor());
 		SmartDashboard.putBoolean("In Switch", cubeSystem.getSwitchSensor());
 
 		SmartDashboard.putBoolean("Compressor Pressure Switch", RobotMap.compressor.getPressureSwitchValue());
 		
-		SmartDashboard.putNumber("elevator speed", RobotMap.elevatorsMotor.get());
+//		SmartDashboard.putNumber("elevator speed", RobotMap.elevatorsMotor.get());
 	}
 }

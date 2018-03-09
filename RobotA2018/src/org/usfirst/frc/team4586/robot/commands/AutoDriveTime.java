@@ -13,8 +13,8 @@ public class AutoDriveTime extends Command {
 
 	private Driver driver;
 	private double time;
-	private double directionMultiplier;
-	private double kP;
+	//private double directionMultiplier;
+	//private double kP;
     public AutoDriveTime(double _time) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -24,19 +24,20 @@ public class AutoDriveTime extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-		driver.resetGyro();
+		/*driver.resetGyro();
 		driver.setSetPointGyro(0);
 		driver.enableGyro();
+		*/
 		setTimeout(this.time);
-		directionMultiplier = SmartDashboard.getNumber("Auto Direction", 1);
-    	kP = SmartDashboard.getNumber("kPD", 0);
+		//directionMultiplier = SmartDashboard.getNumber("Auto Direction", 1);
+    	//kP = SmartDashboard.getNumber("kPD", 0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double error = 0 - driver.getGyro();
-    	double prcw = kP * error; //aka loyshamen
-    	driver.arcadeDrive(SmartDashboard.getNumber("Max speed", 0.7) * directionMultiplier, prcw);
+    	//double error = 0 - driver.getGyro();
+    	//double prcw = kP * error; //aka loyshamen
+    	driver.arcadeDrive(SmartDashboard.getNumber("Max speed", 0.7),0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
