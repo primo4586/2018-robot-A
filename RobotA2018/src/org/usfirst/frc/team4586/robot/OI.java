@@ -13,6 +13,7 @@ import org.usfirst.frc.team4586.robot.commands.AutoTurn;
 import org.usfirst.frc.team4586.robot.commands.CalibrateGyro;
 import org.usfirst.frc.team4586.robot.commands.CatchCube;
 import org.usfirst.frc.team4586.robot.commands.Climb;
+import org.usfirst.frc.team4586.robot.commands.ClimbByTime;
 import org.usfirst.frc.team4586.robot.commands.ClimbRight;
 import org.usfirst.frc.team4586.robot.commands.CubeCatcherNoDelay;
 import org.usfirst.frc.team4586.robot.commands.Invert;
@@ -76,12 +77,12 @@ public class OI {
 				openBothThings = new JoystickButton(joystickDriver, 1);
 				
 				joystickOpertor = new Joystick(1);
-				liftToFloor = new JoystickButton(joystickOpertor , 3);
+				liftToFloor = new JoystickButton(joystickOpertor , 8);
 				//liftToSwitch = new JoystickButton(joystickOpertor ,7);
 				climbR = new JoystickButton(joystickOpertor , 6);
 				openPlatform = new JoystickButton(joystickOpertor , 2);
 				switchCompressor = new JoystickButton(joystickOpertor, 5);
-				calibrateGyro = new JoystickButton(joystickOpertor , 8);
+				calibrateGyro = new JoystickButton(joystickOpertor , 3);
 				downRight = new JoystickButton(joystickOpertor, 4);
 				toggleShloplop = new JoystickButton(joystickOpertor, 1);
 				unlockElevator = new JoystickButton(joystickOpertor, 10);
@@ -98,8 +99,8 @@ public class OI {
 				openBothThings.whenPressed(new OpenZikpaAndHands());
 				
 				//operator commands
-				liftToFloor.toggleWhenPressed(new LiftToFloor());
-				gyroTurn.toggleWhenPressed(new AutoTurn(90));
+				liftToFloor.toggleWhenPressed(new ClimbByTime());
+				gyroTurn.toggleWhenPressed(new ClimbByTime());
 				//liftToSwitch.toggleWhenPressed(new LiftToSwitch());
 				climbR.whileHeld(new ClimbRight());
 				openPlatform.whenPressed(new OpenPlatforms());

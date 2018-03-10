@@ -58,7 +58,7 @@ public class Robot extends TimedRobot {
 
 		cubeSystem = new CubeSystem(RobotMap.solenoidCube2, RobotMap.solenoidCube1, RobotMap.pushCubeOpen,
 				RobotMap.pushCubeClose, RobotMap.compressor, RobotMap.elevatorsMotor, RobotMap.scaleSensor,
-				RobotMap.switchSensor, RobotMap.floorSensor);
+				RobotMap.switchSensor, RobotMap.floorSensor, RobotMap.elevatorsMotor2);
 		driver = new Driver(RobotMap.leftFrontMotor, RobotMap.leftBackMotor, RobotMap.rightFrontMotor,
 				RobotMap.rightBackMotor, RobotMap.gyro, RobotMap.drivingEncoder);
 		m_oi = new OI();
@@ -75,7 +75,9 @@ public class Robot extends TimedRobot {
 		SmartDashBoardRobotInit();
 		SmartDashboard.putData("Auto mode", m_chooser);
 		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-		camera.setResolution(480, 360);
+		camera.setFPS(20);
+		camera.setResolution(360, 240);
+		
 	}
 
 	/**
@@ -113,7 +115,6 @@ public class Robot extends TimedRobot {
 		}
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
-			System.out.println("game data: " + DriverStation.getInstance().getGameSpecificMessage());
 			m_autonomousCommand.start();
 		}
 	}
@@ -187,6 +188,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("In Switch", cubeSystem.getSwitchSensor());
 		//SmartDashboard.putBoolean("Use Gyro", false);
 		SmartDashboard.putBoolean("Allow Pre End Game Platforms", false);
+		SmartDashboard.putNumber("CableTime", 2);
 //		SmartDashboard.putBoolean("sol 1", false);
 //		SmartDashboard.putBoolean("sol 2", false);
 //		SmartDashboard.putBoolean("sol 3", false);
@@ -208,6 +210,8 @@ public class Robot extends TimedRobot {
 		//SmartDashboard.putNumber("Encoder Value", driver.getEncoderValue());
 		//SmartDashboard.putNumber("Encoder Rate", driver.getSpeedEncoder());
 		SmartDashboard.putNumber("elevator current", RobotMap.elevatorsMotor.getOutputCurrent());
+		SmartDashboard.putNumber("elevator current second", RobotMap.elevatorsMotor2.getOutputCurrent());
+
 		SmartDashboard.putNumber("Left front current", RobotMap.leftFrontMotor.getOutputCurrent());
 		SmartDashboard.putNumber("Left back current", RobotMap.leftBackMotor.getOutputCurrent());
 		SmartDashboard.putNumber("Right front current", RobotMap.rightFrontMotor.getOutputCurrent());

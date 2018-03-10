@@ -18,6 +18,7 @@ public class CubeSystem extends Subsystem {
 	Solenoid pushCubeClose;
 
 	WPI_TalonSRX elevatorsMotor;
+	WPI_TalonSRX elevatorsMotor2;
 	DigitalInput scaleSensor;
 	DigitalInput switchSensor;
 	DigitalInput floorSensor;
@@ -27,13 +28,14 @@ public class CubeSystem extends Subsystem {
 
 	public CubeSystem(Solenoid solenoid2, Solenoid solenoid1, Solenoid pushCubeOpen, Solenoid pushCubeClose,
 			Compressor compressor, WPI_TalonSRX elevatorsMotor, DigitalInput scaleSensor, DigitalInput switchSensor,
-			DigitalInput floorSensor) {
+			DigitalInput floorSensor, WPI_TalonSRX elevatorsMotor2) {
 		this.compressor = compressor;
 		this.solenoid1 = solenoid1;
 		this.solenoid2 = solenoid2;
 		this.pushCubeOpen = pushCubeOpen;
 		this.pushCubeClose = pushCubeClose;
 		this.elevatorsMotor = elevatorsMotor;
+		this.elevatorsMotor2 = elevatorsMotor2;
 		this.scaleSensor = scaleSensor;
 		this.switchSensor = switchSensor;
 		this.floorSensor = floorSensor;
@@ -90,9 +92,11 @@ public class CubeSystem extends Subsystem {
 	public void setSpeedElevators(double speed) {
 		if (this.canUseElevator) {
 			this.elevatorsMotor.set(speed);
+			this.elevatorsMotor2.set(speed);
 		}
 		else {
 			this.elevatorsMotor.set(0);
+			this.elevatorsMotor2.set(0);
 		}
 	}
 

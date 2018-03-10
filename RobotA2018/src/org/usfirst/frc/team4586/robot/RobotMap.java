@@ -39,6 +39,7 @@ public class RobotMap {
 	public static Solenoid pushCubeOpen;
 	public static Solenoid pushCubeClose;
 	public static WPI_TalonSRX elevatorsMotor;
+	public static WPI_TalonSRX elevatorsMotor2;
 	public static AnalogGyro gyro;
 	public static AnalogInput ultrasonic;
 	public static Encoder drivingEncoder;
@@ -68,6 +69,8 @@ public class RobotMap {
 		climbMotor2.setSafetyEnabled(false);
 		elevatorsMotor = new WPI_TalonSRX(3);
 		elevatorsMotor.setSafetyEnabled(false);
+		elevatorsMotor2 = new WPI_TalonSRX(2);
+		elevatorsMotor2.setSafetyEnabled(false);
 
 		compressor = new Compressor();
 		compressor.setClosedLoopControl(true);

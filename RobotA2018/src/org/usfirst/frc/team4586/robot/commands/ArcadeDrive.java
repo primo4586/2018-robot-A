@@ -42,7 +42,7 @@ public class ArcadeDrive extends Command {
 		// System.out.println(SmartDashboard.getKeys());
 		this.speed = -((this.oi.joystickDriver.getRawAxis(1) * ((SmartDashboard.getNumber("Max speed", 0.7))
 						+ (oi.joystickDriver.getRawAxis(3) * 0.3 - oi.joystickDriver.getRawAxis(2) * 0.2))));
-		this.rotation = (this.oi.joystickDriver.getRawAxis(4) * 0.75);
+		this.rotation = (this.oi.joystickDriver.getRawAxis(4) * 0.8);
 		if (Math.abs(speed) < 0.2) {
 			speed = 0;
 		}

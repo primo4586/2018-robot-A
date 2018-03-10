@@ -26,7 +26,7 @@ public class LiftToFloor extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		cubeSystem.setSpeedElevators(-SmartDashboard.getNumber("Elevator Speed", 0)*0.7);
+		cubeSystem.setSpeedElevators(-0.7);
 
 	}
 

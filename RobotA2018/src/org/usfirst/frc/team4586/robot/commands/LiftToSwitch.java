@@ -34,7 +34,7 @@ public class LiftToSwitch extends Command {
 	protected void execute() {
 		if (cubeSystem.getFloorSensor())
 			speedMol = 1;
-		cubeSystem.setSpeedElevators(speedMol * SmartDashboard.getNumber("Elevator Speed", 0));
+		cubeSystem.setSpeedElevators(speedMol * 0.7);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

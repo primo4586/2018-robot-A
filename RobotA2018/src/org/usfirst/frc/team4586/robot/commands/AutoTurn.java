@@ -42,7 +42,7 @@ public class AutoTurn extends Command {
     	double drcw = kD*der;
     	double prcw = kP*error;
     	if (Math.abs(driver.getGyro() - setPoint) >= 1) 
-    		driver.arcadeDrive(0,(prcw + drcw) * 0.8);
+    		driver.arcadeDrive(0,(prcw + drcw) * 0.7);
     	else
     		driver.arcadeDrive(0, 0);
     	prevError = error;
