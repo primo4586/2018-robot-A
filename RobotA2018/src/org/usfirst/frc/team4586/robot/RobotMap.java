@@ -7,18 +7,14 @@
 
 package org.usfirst.frc.team4586.robot;
 
-import com.ctre.phoenix.CTREJNIWrapper;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Ultrasonic;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -50,8 +46,8 @@ public class RobotMap {
 	public static Solenoid solenoidCube1;
 	public static Solenoid solenoidCube2;
 	public static Solenoid openShloplopSolenoid;
-	public static Solenoid closeShloplopSolenoid; //Shloplop = Somthing for climbing or whatever
-	
+	public static Solenoid closeShloplopSolenoid; // Shloplop = Somthing for
+													// climbing or whatever
 
 	public static void Init() {
 		// TODO Check connections
@@ -78,17 +74,17 @@ public class RobotMap {
 		solenoidCube1.set(false);
 		solenoidCube2 = new Solenoid(7);
 		solenoidCube2.set(false);
-		pushCubeOpen = new Solenoid(4); //ID'S ARE 4 AND 5  - DOUBLE SOLENOID
+		pushCubeOpen = new Solenoid(4); // ID'S ARE 4 AND 5 - DOUBLE SOLENOID
 		pushCubeClose = new Solenoid(5);
-		openPlatfrom = new Solenoid(1, 4); // ID'S ARE 2 AND 3  - DOUBLE SOLENOID
+		openPlatfrom = new Solenoid(1, 4); // ID'S ARE 2 AND 3 - DOUBLE SOLENOID
 		openPlatfrom.set(false);
-		closePlatfrom = new Solenoid(1,5);
+		closePlatfrom = new Solenoid(1, 5);
 		closePlatfrom.set(true);
-		openShloplopSolenoid = new Solenoid(1,6);
+		openShloplopSolenoid = new Solenoid(1, 6);
 		openShloplopSolenoid.set(false);
-		closeShloplopSolenoid = new Solenoid(1,7);
+		closeShloplopSolenoid = new Solenoid(1, 7);
 		closeShloplopSolenoid.set(true);
-		
+
 		gyro = new AnalogGyro(0);
 		drivingEncoder = new Encoder(9, 8);
 		scaleSensor = new DigitalInput(2);

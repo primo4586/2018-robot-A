@@ -18,17 +18,23 @@ public class AutoMid extends CommandGroup {
 			addSequential(new AutoTurn(-55)); // -60
 			addSequential(new AutoDrive(170)); // 235
 			addSequential(new AutoTurn(55)); // 60
-			addSequential(new AutoDrive(80)); // 110
+			addSequential(new AutoDriveByTimeGyro(1));
+			// addSequential(new AutoDrive(80)); // 110
 			addSequential(new CubeCatcherNoDelay()); // Closes the claws
+			addSequential(new Wait(0.1));
+			addSequential(new CatchCube());
 		} else {
 			addSequential(new AutoTurn(38)); // -60
 			addSequential(new AutoDrive(180)); // 235
 			addSequential(new AutoTurn(-38)); // 60
-			addSequential(new AutoDrive(80)); // 110
-			addSequential(new Wait(0.05));
+			// addSequential(new AutoDrive(80)); // 110
+			addSequential(new AutoDriveByTimeGyro(0.5));
+			// addSequential(new Wait(0.05));
 			addSequential(new CubeCatcherNoDelay()); // Closes the claws
 			// addSequential(new AutoTurn(-90)); // 90
 			// addSequential(new AutoDrive(150)); // 150
+			addSequential(new Wait(0.1));
+			addSequential(new CatchCube());
 		}
 	}
 }

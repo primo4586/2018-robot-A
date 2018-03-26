@@ -20,67 +20,67 @@ public class Climber extends Subsystem {
 	boolean isOpen;
 	boolean toOpenShloplop;
 
-	public Climber(WPI_TalonSRX climbMotor1, WPI_TalonSRX climbMotor2, Compressor compressor, Solenoid openPlatform, Solenoid closePlatform ,Solenoid openShloplopSolenoid ,Solenoid closeShloplopSolenoid) {
+	public Climber(WPI_TalonSRX climbMotor1, WPI_TalonSRX climbMotor2, Compressor compressor, Solenoid openPlatform,
+			Solenoid closePlatform, Solenoid openShloplopSolenoid, Solenoid closeShloplopSolenoid) {
 		this.isOpen = false;
 		this.climbMotor1 = climbMotor1;
 		this.climbMotor2 = climbMotor2;
 		this.compressor = compressor;
 		this.openPlatform = openPlatform;
 		this.closePlatform = closePlatform;
-		this.openShloplopSolenoid=openShloplopSolenoid;
-		this.closeShloplopSolenoid=closeShloplopSolenoid;
-		
+		this.openShloplopSolenoid = openShloplopSolenoid;
+		this.closeShloplopSolenoid = closeShloplopSolenoid;
+
 	}
 
-    // checks if the platforms' pistons are opened
-    public boolean isOpened() {
-	return openPlatform.get();
-    }
+	// checks if the platforms' pistons are opened
+	public boolean isOpened() {
+		return openPlatform.get();
+	}
 
-    // set the pistons state
-    public void setPiston(boolean isOpened) {
-	openPlatform.set(isOpened);
-	closePlatform.set(!isOpened);
-    }
+	// set the pistons state
+	public void setPiston(boolean isOpened) {
+		openPlatform.set(isOpened);
+		closePlatform.set(!isOpened);
+	}
 
-    public void setSpeedClimb(double speed) {
-	this.climbMotor1.set(speed);
-	this.climbMotor2.set(speed);
-    }
-    
-    public void setSpeedClimbL(double speed) {
-    	this.climbMotor1.set(speed);
-    }
-    
-    public void setSpeedClimbR(double speed) {
-    	this.climbMotor2.set(speed);
-    }
+	public void setSpeedClimb(double speed) {
+		this.climbMotor1.set(speed);
+		this.climbMotor2.set(speed);
+	}
 
-    public void setPlatform(boolean open) {
-    	openPlatform.set(open);
-    	closePlatform.set(!open);
-    }
+	public void setSpeedClimbL(double speed) {
+		this.climbMotor1.set(speed);
+	}
 
-    public void stopAllClimberMotors() {
-	this.climbMotor1.set(0);
-	this.climbMotor2.set(0);
-    }
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+	public void setSpeedClimbR(double speed) {
+		this.climbMotor2.set(speed);
+	}
 
-    public void initDefaultCommand() {
-	// Set the default command for a subsystem here.
-	// setDefaultCommand(new MySpecialCommand());
-    }
-    public void setShloplop(boolean toOpenShloplop)
-    {
-    	this.openShloplopSolenoid.set(toOpenShloplop);
-    	this.closeShloplopSolenoid.set(!toOpenShloplop);
-    }
-    public boolean isOpendShloplop()
-    {
-    	return openShloplopSolenoid.get();
-    }
-    
-    
+	public void setPlatform(boolean open) {
+		openPlatform.set(open);
+		closePlatform.set(!open);
+	}
+
+	public void stopAllClimberMotors() {
+		this.climbMotor1.set(0);
+		this.climbMotor2.set(0);
+	}
+	// Put methods for controlling this subsystem
+	// here. Call these from Commands.
+
+	public void initDefaultCommand() {
+		// Set the default command for a subsystem here.
+		// setDefaultCommand(new MySpecialCommand());
+	}
+
+	public void setShloplop(boolean toOpenShloplop) {
+		this.openShloplopSolenoid.set(toOpenShloplop);
+		this.closeShloplopSolenoid.set(!toOpenShloplop);
+	}
+
+	public boolean isOpendShloplop() {
+		return openShloplopSolenoid.get();
+	}
+
 }

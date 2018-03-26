@@ -4,7 +4,6 @@ import org.usfirst.frc.team4586.robot.Robot;
 import org.usfirst.frc.team4586.robot.subsystems.CubeSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -32,7 +31,7 @@ public class LiftToFloor extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return cubeSystem.getFloorSensor()||isTimedOut();
+		return cubeSystem.getFloorSensor() || isTimedOut();
 	}
 
 	// Called once after isFinished returns true

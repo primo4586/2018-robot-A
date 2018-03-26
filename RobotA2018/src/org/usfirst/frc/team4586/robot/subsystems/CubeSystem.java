@@ -93,8 +93,7 @@ public class CubeSystem extends Subsystem {
 		if (this.canUseElevator) {
 			this.elevatorsMotor.set(speed);
 			this.elevatorsMotor2.set(speed);
-		}
-		else {
+		} else {
 			this.elevatorsMotor.set(0);
 			this.elevatorsMotor2.set(0);
 		}

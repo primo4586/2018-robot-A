@@ -14,11 +14,12 @@ public class OpenPlatforms extends Command {
 
 	private Climber climber;
 	boolean toOpen;
+
 	public OpenPlatforms() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		this.climber = Robot.climber;
-		this.toOpen=this.climber.isOpened();
+		this.toOpen = this.climber.isOpened();
 	}
 
 	// Called just before this Command runs the first time
